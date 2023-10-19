@@ -1,11 +1,13 @@
 # 2023-3e-Bazar
 
-## Vedoucí
+## Pětihlav
 
 Jan Ševčík
 
+## Radim
+
 Radim Tříletý
 
-## Zbytek
+## Faker z wishe
 
 Vojtěch Kadlec
