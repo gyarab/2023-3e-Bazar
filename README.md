@@ -8,6 +8,6 @@ Jan Ševčík
 
 Radim Tříletý
 
-## Faker z wishe
+## Zbytek
 
 Vojtěch Kadlec
