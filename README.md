@@ -8,6 +8,6 @@ Jan Ševčík
 
 Radim Tříletý
 
-## Zbytek
+## Faker z wishe -> nova hodnost Radim
 
 Vojtěch Kadlec
