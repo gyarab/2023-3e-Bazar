@@ -1,5 +1,4 @@
-
-#
+*
 {
     margin: 0;
     padding: 0;
@@ -9,7 +8,7 @@
 body {
     min-height: 100vh;
     background: white;
-    overflow-x: hidden;
+    overflow-x: hidden; 
     margin: 0;
 }
 .sidebar {
@@ -26,7 +25,7 @@ body:hover .sidebar {
 .menu {
     position: absolute;
     top: 25px;
-    left: 20px;
+    left: 25px;
     width: 100%;
     color: red;
     transition: width 0.5s; 
