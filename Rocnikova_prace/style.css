@@ -38,7 +38,7 @@ body:hover .menu {
     list-style: none;
 }
 .menu li:hover {
-    background-color: blue;
+    background-color: rgb(0, 0, 0);
 }
 .menu li a {
     position: relative;
