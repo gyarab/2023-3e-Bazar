@@ -1,6 +1,6 @@
 function addRectangle() {
     var rectangle = document.createElement("div");
-    rectangle.style.width = "500px";
+    rectangle.style.width = "400px";
     rectangle.style.height = "200px";
     rectangle.style.backgroundColor = "black";
     rectangle.style.margin = "200px";
