@@ -1,5 +1,4 @@
-*
-{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -25,7 +24,7 @@ body:hover .sidebar {
 .menu {
     position: absolute;
     top: 25px;
-    left: 25px;
+    left: 10px;
     width: 100%;
     color: red;
     transition: width 0.5s; 
