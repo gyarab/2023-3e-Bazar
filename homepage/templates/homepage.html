@@ -15,8 +15,12 @@
         </div>
         <div class="prava-strana">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjfsK9iGkMtV5p88Kry1F0rdrL7RndRENRJw&usqp=CAU" style="width: 40px; height: 40px;" >
-        <!--TODO fixni to-->
-        <a href="*"><h2 style="cursor: pointer;">&nbsp login</h2></a>
+        {% if request.user.is_authenticated %}
+        <!--TODO fixnout-->
+            <a href="*"><h2 style="cursor: pointer;">&nbsp profile</h2></a>
+        {% else %}
+            <a href="{% url 'signup' %}"><h2 style="cursor: pointer;">&nbsp signup</h2></a>
+        {% endif %}
     </div>  
     </div>
     <nav class="sidebar">
