@@ -5,13 +5,13 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=40)
-    #TODO pridej obrazek
 
     def __str__(self):  
         return self.name
 
     class Meta:
         verbose_name_plural = 'Categories'
+
 class Order(models.Model):
     Title = models.CharField(max_length=255)
     mail = models.CharField(max_length=255)
