@@ -7,7 +7,7 @@ function addRectangle() {
     rectangle.style.float = "left";
     var textSpan = document.createElement("span");// Vytvořte text pro span
     textSpan.style.color = "white";// Vytvořte text pro span
-    textSpan.textContent = " Lorem ipsum dolor sit amet consectetur adipisicing elit. ";// Vytvořte text pro span
+    textSpan.textContent = "Lorem ipsum";// Vytvořte text pro span
     rectangle.appendChild(textSpan);
     document.body.appendChild(rectangle); //připojení
 }
