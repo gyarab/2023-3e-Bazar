@@ -1,3 +1,4 @@
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -15,10 +16,6 @@ class Order(models.Model):
     Title = models.CharField(max_length=255)
     mail = models.CharField(max_length=255)
     price = models.IntegerField()
-    picture1 = models.ImageField(upload_to='images/')
-    picture2 = models.ImageField(upload_to='images/')
-    picture3 = models.ImageField(upload_to='images/')
-    picture4 = models.ImageField(upload_to='images/')
     phone_number = models.CharField(max_length=255)
     description = models.TextField(blank = True, null = True)
     creator = models.ForeignKey(User, related_name='Orders', on_delete=models.CASCADE)
@@ -29,3 +26,16 @@ class Order(models.Model):
     
     class Meta:
         verbose_name_plural = 'Orders'
+
+class OrderAttachment(models.Model):
+    picture1 = models.ImageField(upload_to='images/', default='images/sedan.png')
+    picture2 = models.ImageField(upload_to='images/', default='images/sedan.png')
+    picture3 = models.ImageField(upload_to='images/', default='images/sedan.png')
+    picture4 = models.ImageField(upload_to='images/', default='images/sedan.png')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.order.Title
+    
+    class Meta:
+        verbose_name_plural = 'OrderAttachments'
