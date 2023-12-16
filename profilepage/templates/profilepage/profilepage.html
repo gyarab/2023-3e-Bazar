@@ -1,1 +1,40 @@
-<h1>Ahoj</h1>
+{% block content%}
+<div>
+    <h1>Create Order</h1>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div>
+            <h4>Title</h4>
+            {{ form.title }}
+        </div>
+
+        <div>
+            <h4>Description</h4>
+            {{ form.description }}
+        </div>
+
+        <div>
+            <h4>Description</h4>
+            {{ form.category }}
+        </div>
+
+        <div>
+            <h4>Phone number</h4>
+            {{ form.phone_number }}
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div>
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <button>Create</button>
+    </form>
+</div>
+{% endblock %}

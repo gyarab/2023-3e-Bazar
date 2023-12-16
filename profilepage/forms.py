@@ -1,8 +1,9 @@
 from django import forms
-from homepage.models import Order
+from homepage.models import Category, Order
 
 class MakeAnOrder(forms.Form):
 
-    class Meta:
-        model = Order
-        fields = ('Title', 'mail', '')
+    title = forms.CharField(label="Title",max_length=40)
+    description = forms.CharField(widget=forms.Textarea)
+    category = forms.ModelChoiceField(Category.objects.all())
+    phone_number = forms.CharField(max_length=11)
