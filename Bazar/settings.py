@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'Bazar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres', 
+        'NAME': 'bazar', 
         'USER': 'postgres',
         'PASSWORD': 'Kiblicek009',
         'HOST': '127.0.0.1', 

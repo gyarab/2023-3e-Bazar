@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
-
 class Category(models.Model):
     name = models.CharField(max_length=40)
     picture = models.ImageField(upload_to='images/')
@@ -16,6 +14,11 @@ class Category(models.Model):
 class Order(models.Model):
     Title = models.CharField(max_length=255)
     mail = models.CharField(max_length=255)
+    price = models.IntegerField()
+    picture1 = models.ImageField(upload_to='images/')
+    picture2 = models.ImageField(upload_to='images/')
+    picture3 = models.ImageField(upload_to='images/')
+    picture4 = models.ImageField(upload_to='images/')
     phone_number = models.CharField(max_length=255)
     description = models.TextField(blank = True, null = True)
     creator = models.ForeignKey(User, related_name='Orders', on_delete=models.CASCADE)
@@ -26,5 +29,3 @@ class Order(models.Model):
     
     class Meta:
         verbose_name_plural = 'Orders'
-
-
