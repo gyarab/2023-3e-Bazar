@@ -5,50 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ročníkovkos</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css
+    ">
 </head>
-<body>
-    <div class="horek">
-        <div class="leva-strana">
-            <img src="https://avatars.githubusercontent.com/u/34084239?s=280&v=4" style="width: 40px; height: 40px;">
-            <h1 style="cursor: default;">&nbsp Bazar</h1>
+<body class="p-0 m-0 border-0 bd-example m-0 border-0" >
+    <nav class="navbar bg-body-tertiary navbar-expand-lg" >
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="https://avatars.githubusercontent.com/u/34084239?s=280&v=4" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+          </a>        
+            <a class="navbar-brand" href="#">Bazaros</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="mainmenu.html">Domů</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Kategorie
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Login
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="signin.html">Sign in</a></li>
+                  <li><a class="dropdown-item" href="signup.html">Sign up</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="resetpasword.html">Cant login?</a></li>
+                </ul>
+              </li>
+          </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
         </div>
-        <div class="prava-strana">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjfsK9iGkMtV5p88Kry1F0rdrL7RndRENRJw&usqp=CAU" style="width: 40px; height: 40px;" >
-         <a href="[Insert]"><h2 style="cursor: pointer;">&nbsp login</h2></a>
-    </div>
-    </div>
-    <nav class="sidebar">
-        <ul class="menu">
-            <li>
-                <a href="[Insert]">
-                    <span class="title"><img src="https://static.thenounproject.com/png/423483-200.png" style=" width: 20px; height: 20px;">
-                        &nbsp
-                        &nbsp 
-                        Home
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="[Insert]">
-                    <span class="title"><img src="https://static.thenounproject.com/png/715578-200.png" style=" width: 20px; height: 20px;">
-                        &nbsp 
-                        &nbsp 
-                        Elektronika
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="[Insert]">
-                    <span class="title"><img src="https://img.freepik.com/premium-vector/car-icon-vehicle-icon-car-vector-icon_564974-1452.jpg?w=2000" style=" width: 20px; height: 20px;">
-                        &nbsp
-                        &nbsp 
-                        Auta
-                    </span>
-                </a>
-            </li>
-        </ul>
+      </div>
     </nav>
+    
     <button onclick="addRectangle()" class="inzerat">+</button>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js
+    "></script>
 </body>
 </html>
