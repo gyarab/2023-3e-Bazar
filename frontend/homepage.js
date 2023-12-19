@@ -15,6 +15,6 @@ function addRectangle() {
     document.body.appendChild(rectangle);
 
     rectangle.addEventListener("click", function() {  // Open a new HTML page when the rectangle is clicked
-        window.location.href = "#";
+        window.location.href = "[Insert]";
     });
 }
