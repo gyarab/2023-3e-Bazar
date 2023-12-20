@@ -2,7 +2,7 @@
 <div>
     <h1>Create Order</h1>
 
-    <form method="post" action=".">
+    <form method="post">
         {% csrf_token %}
         <div>
             <h4>Title</h4>
@@ -15,21 +15,26 @@
         </div>
 
         <div>
-            <h4>Pictures</h4>
-            {{ form.picture1 }}
-            {{ form.picture2 }}
-            {{ form.picture3 }}
-            {{ form.picture4 }}
+            <h4>price</h4>
+            {{ form.price }}
         </div>
 
         <div>
-            <h4>Category</h4>
+            <h4>phone_number</h4>
+            {{ form.phone_number }}
+        </div>
+
+        <div>
+            <h4>category</h4>
             {{ form.category }}
         </div>
 
         <div>
-            <h4>Phone number</h4>
-            {{ form.phone_number }}
+            <h4>pictures</h4>
+            {{ form.picture1 }}
+            {{ form.picture2 }}
+            {{ form.picture3 }}
+            {{ form.picture4 }}
         </div>
 
         {% if form.errors or form.non_field_errors %}

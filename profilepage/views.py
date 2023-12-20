@@ -7,15 +7,17 @@ def index(request):
         u = MakeAnOrder(request.POST)
 
         if u.is_valid():
-            
+            #TODO fixnout - neuklada se to
             o = Order.objects.create(
                 Title = u.cleaned_data["title"],
                 description = u.cleaned_data["description"],
                 phone_number = u.cleaned_data["category"],
                 category = u.cleaned_data["phone_number"],
+                price = u.cleaned_data["price"],
                 creator = request.user,
                 mail = request.user.email,
             )
+            o.save()
             a = OrderAttachment.objects.create(
                 picture1 = u.cleaned_data["picture1"],
                 picture2 = u.cleaned_data["picture1"],
@@ -23,7 +25,6 @@ def index(request):
                 picture4 = u.cleaned_data["picture1"],
                 order = o,
             )
-            o.save()
             a.save()
 
     form = MakeAnOrder()

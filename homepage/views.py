@@ -1,14 +1,11 @@
 from django.shortcuts import redirect, render, get_object_or_404
 
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from .models import Category, Order
 
 # Create your views here.
 
 def index(request):
-    if 'btn1' in request.POST:
-        return redirect("/profilepage/")
-    
         #categories
     category = [get_object_or_404(Category, pk=1)]
     for x in range (2, Category.objects.count() + 1):
@@ -24,15 +21,23 @@ def index(request):
         "category": category,
         "order": order,
     }
-    return render(request, 'homepage.html', context)
+    return render(request, 'home.html', context)
 
 def category(request, category_id):
     category = [get_object_or_404(Category, pk=category_id)]
+
+    #TODO fixnout tuhle mrdku
+    order = []
+    for x in range (1, Order.objects.count() + 1):
+        o = get_object_or_404(Order, pk=x)
+        if (o.category is category):
+            order.append(o)
     
     context = {
-        "category": category
+        "category": category,
+        "order": order,
     }
-    return render(request, 'homepage.html', context)
+    return render(request, 'home.html', context)
 
 
 def signup(request):
@@ -47,3 +52,11 @@ def signup(request):
         u = SignupForm()
 
     return render(request, 'signup.html', {'form' : u})
+
+def resetpassword(request):
+    return render(request, 'resetpassword.html')
+
+def logout(request):
+    logout(request)
+    return redirect('/login/')
+    

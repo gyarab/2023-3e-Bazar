@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 class LoginForm(AuthenticationForm):
     
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your username',
+        'placeholder': 'Jmeno uzivatele',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Your password',
+        'placeholder': 'Heslo',
     }))
 
 class SignupForm(UserCreationForm):
@@ -17,16 +17,16 @@ class SignupForm(UserCreationForm):
         fields = ('email', 'username', 'password1', 'password2')
 
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your username',
+        'placeholder': 'Jmeno uzivatele',
     }))
     email = forms.CharField(widget=forms.EmailInput(attrs={
-        'placeholder': 'Your email address',
+        'placeholder': 'Email adresa',
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Your password',
+        'placeholder': 'Heslo',
     }))
     password2 = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Repeat password',
+        'placeholder': 'Zopakujte heslo',
     }))
 
         
