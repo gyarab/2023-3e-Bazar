@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import logout
+from django.core.mail import send_mail
 
 from .forms import SignupForm
 from .models import Category, Order
@@ -49,11 +50,19 @@ def signup(request):
         if u.is_valid():
             u.save()
 
-            return redirect('/login/')
+            return redirect('/send-welcome-email/')
     else:
         u = SignupForm()
 
     return render(request, 'signup.html', {'form' : u})
+
+def send_welcome_email(request):
+    subject = 'Vítejte na našem bazaru'
+    message = 'Děkujeme za vytvoření účtu!'
+    from_email = 'admin@mysite.com'
+    recipient_list = [request.user.email]
+    send_mail(subject, message, from_email, recipient_list)
+    return redirect('/login/')
 
 def resetpassword(request):
     return render(request, 'resetpassword.html')
