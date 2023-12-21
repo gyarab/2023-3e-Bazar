@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth import logout
 
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm
 from .models import Category, Order
 
-# Create your views here.
-
+#home
 def index(request):
     category = Category.objects.all()
     order = Order.objects.all()
@@ -22,6 +22,7 @@ def index(request):
     }
     return render(request, 'home.html', context)
 
+#categories
 def category(request, category_id):
     c = get_object_or_404(Category, pk=category_id)
     order = Order.objects.filter(category__name=c.name)
@@ -40,7 +41,7 @@ def category(request, category_id):
     }
     return render(request, 'home.html', context)
 
-
+#signup
 def signup(request):
     if request.method == 'POST': 
         u = SignupForm(request.POST)
@@ -57,7 +58,9 @@ def signup(request):
 def resetpassword(request):
     return render(request, 'resetpassword.html')
 
-def logout(request):
+def out(request):
     logout(request)
-    return redirect('/login/')
-    
+    return redirect('/')
+
+def profile(request):
+    return redirect('/profilepage/')
