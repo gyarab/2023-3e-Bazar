@@ -6,36 +6,37 @@ from .models import Category, Order
 # Create your views here.
 
 def index(request):
-        #categories
-    category = [get_object_or_404(Category, pk=1)]
-    for x in range (2, Category.objects.count() + 1):
-        category.append(get_object_or_404(Category, pk=x))
+    category = Category.objects.all()
+    order = Order.objects.all()
 
-        #orders
-    order = [get_object_or_404(Order, pk=1)]
-    for x in range (2, Order.objects.count() + 1):
-        order.append(get_object_or_404(Order, pk=x))
-    
-    
+    orders = []
+    if 'search' in request.POST:
+        searched = request.POST['searched_text']
+        orders = Order.objects.filter(Title__contains=searched)
+    else:
+        orders = order
+
     context = {
         "category": category,
-        "order": order,
+        "order": orders,
     }
     return render(request, 'home.html', context)
 
 def category(request, category_id):
-    category = [get_object_or_404(Category, pk=category_id)]
+    c = get_object_or_404(Category, pk=category_id)
+    order = Order.objects.filter(category__name=c.name)
 
-    #TODO fixnout tuhle mrdku
-    order = []
-    for x in range (1, Order.objects.count() + 1):
-        o = get_object_or_404(Order, pk=x)
-        if (o.category is category):
-            order.append(o)
-    
+    if 'search' in request.POST:
+        searched = request.POST['searched_text']
+        #TODO kategorizovanej search
+        orders = Order.objects.filter(Title__contains=searched)
+    else:
+        orders = order
+
+    category = Category.objects.all()
     context = {
         "category": category,
-        "order": order,
+        "order": orders,
     }
     return render(request, 'home.html', context)
 
