@@ -2,7 +2,7 @@
 <div>
     <h1>Create Order</h1>
 
-    <form method="post">
+    <form method="post" action=".">
         {% csrf_token %}
         <div>
             <h4>Title</h4>
@@ -47,7 +47,7 @@
             </div>
         {% endif %}
 
-        <button>Create</button>
+        <button type="Submit">Create</button>
     </form>
 </div>
 {% endblock %}

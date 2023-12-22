@@ -66,9 +66,6 @@ def send_welcome_email(request):
     send_mail(subject, message, from_email, recipient_list)
     return redirect('/login/')
 
-def resetpassword(request):
-    return render(request, 'resetpassword.html')
-
 def out(request):
     logout(request)
     return redirect('/')
