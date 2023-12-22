@@ -1,3 +1,5 @@
+{% load widget_tweaks %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,22 +49,39 @@
     <div class="container" style="margin-top: 50px;">
         <form method="post" action=".">
             {% csrf_token %}
-            <div class="col-md-2">
-                {{ form.username }}
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label">Uživatelské jméno</label>
+                    {% render_field form.username class+="form-control" %}
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label">Email</label>
+                    {% render_field form.email class+="form-control" %}
+                </div>
             </div>
-            <div class="col-md-2">
-                {{ form.email }}
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label">Heslo</label>
+                    {% render_field form.password1 class+="form-control" %}
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label">Zopakujte Heslo</label>
+                    {% render_field form.password2 class+="form-control" %}
+                </div>
             </div>
-            <div class="col-md-2">
-                {{ form.password1 }}
-            </div>
-            <div class="col-md-2">
-                {{ form.password2 }}
-            </div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Sign up</button>
+            <div class="row">
+                <div class="col-lg-2 col-md-3" style="margin-top: 15px">
+                    <button class="btn btn-primary" type="submit">Zaregistrovat se</button>
+                </div>
             </div>
         </form>
+        <div class="col-lg-3 col-md-4" style="margin-top: 15px">
+            <button class="btn btn-light">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="google logo" height="41" width="41">
+                Přihlásit se s googlem
+            </button>
+        </div>
+    </div>
 
         {% if form.errors or form.non_field_errors %}
             <div>

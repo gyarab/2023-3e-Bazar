@@ -28,6 +28,7 @@ def category(request, category_id):
     c = get_object_or_404(Category, pk=category_id)
     order = Order.objects.filter(category__name=c.name)
 
+
     if 'search' in request.POST:
         searched = request.POST['searched_text']
         #TODO kategorizovanej search
@@ -50,12 +51,13 @@ def signup(request):
         if u.is_valid():
             u.save()
 
-            return redirect('/send-welcome-email/')
+            return redirect('/login/')
     else:
         u = SignupForm()
 
     return render(request, 'signup.html', {'form' : u})
 
+#TODO smazat nebo dodelat
 def send_welcome_email(request):
     subject = 'Vítejte na našem bazaru'
     message = 'Děkujeme za vytvoření účtu!'
