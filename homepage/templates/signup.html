@@ -76,10 +76,11 @@
             </div>
         </form>
         <div class="col-lg-3 col-md-4" style="margin-top: 15px">
-            <button class="btn btn-light">
+            {% load socialaccount %}
+            <a href="{% provider_login_url 'google' %}?next=/" class="link-primary">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="google logo" height="41" width="41">
                 Přihlásit se s googlem
-            </button>
+            </a>
         </div>
     </div>
 
