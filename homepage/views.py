@@ -57,15 +57,6 @@ def signup(request):
 
     return render(request, 'signup.html', {'form' : u})
 
-#TODO smazat nebo dodelat
-def send_welcome_email(request):
-    subject = 'Vítejte na našem bazaru'
-    message = 'Děkujeme za vytvoření účtu!'
-    from_email = 'admin@mysite.com'
-    recipient_list = [request.user.email]
-    send_mail(subject, message, from_email, recipient_list)
-    return redirect('/login/')
-
 def out(request):
     logout(request)
     return redirect('/')
