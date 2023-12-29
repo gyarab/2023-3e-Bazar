@@ -29,9 +29,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown">
+                {% if selected_category %}
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ selected_category.name }}
+                </a>
+                {% else %}
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Kategorie
                 </a>
+                {% endif %}
                 <ul class="dropdown-menu">
                     {% for category in category %}
                     <li><a class="dropdown-item" href="{% url 'category' category.id %}">{{ category.name }}</a></li>

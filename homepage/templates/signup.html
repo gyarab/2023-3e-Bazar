@@ -44,7 +44,7 @@
     <div class="container" style="margin-top: 50px;">
         <form method="post" action=".">
             {% csrf_token %}
-            <div class="row">
+            <div class="row" style="margin-top: 150px;">
                 <div class="col-lg-6 col-md-12">
                     <label class="form-label">Uživatelské jméno</label>
                     {% render_field form.username class+="form-control" %}
@@ -72,13 +72,15 @@
         </form>
         <div class="col-lg-3 col-md-4" style="margin-top: 15px">
             {% load socialaccount %}
-            <a href="{% provider_login_url 'google' %}?next=/" class="link-primary">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="google logo" height="41" width="41">
-                Přihlásit se s googlem
-            </a>
+            <button class="btn btn-success" type="submit">
+                <a href="{% provider_login_url 'google' %}?next=/" class="link-light" style="text-decoration: none">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="google logo" height="23" width="23">
+                    Přihlásit se přes Google
+                </a>
+            </button>
         </div>
     </div>
-
+    
         {% if form.errors or form.non_field_errors %}
             <div>
                 {% for field in form %}

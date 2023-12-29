@@ -30,9 +30,11 @@ def category(request, category_id):
         orders = useable("", category_id)
 
     category = Category.objects.all()
+    selected_category = get_object_or_404(Category, pk=category_id)
     context = {
         "category": category,
         "order": orders,
+        "selected_category": selected_category,
     }
     return render(request, 'home.html', context)
 
@@ -98,4 +100,3 @@ def generate(request):
         o.creator = request.user
         o.category = Category.objects.get(pk=1)
         o.save()
-    
