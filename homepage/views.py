@@ -3,7 +3,7 @@ from django.contrib.auth import logout
 from datetime import datetime, timedelta
 
 from .forms import SignupForm
-from .models import Category, Order
+from .models import Category, Order, Theme
 
 #home
 def index(request):
@@ -14,10 +14,17 @@ def index(request):
     else:
         orders = useable("", 0)
 
+    color = ''
+    if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
+        color = Theme.objects.get(user=request.user).theme
+    else:
+        color = 'white'
+
     category = Category.objects.all()
     context = {
         "category": category,
         "order": orders,
+        "color": color,
     }
     return render(request, 'home.html', context)
 
@@ -29,12 +36,20 @@ def category(request, category_id):
     else:
         orders = useable("", category_id)
 
+    color = ''
+    if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
+        color = Theme.objects.get(user=request.user).theme
+    else:
+        color = 'white'
+
     category = Category.objects.all()
     selected_category = get_object_or_404(Category, pk=category_id)
+
     context = {
         "category": category,
         "order": orders,
         "selected_category": selected_category,
+        "color": color,
     }
     return render(request, 'home.html', context)
 
@@ -59,8 +74,33 @@ def out(request):
 def profile():
     return redirect('/profilepage/')
 
-def theme():
-    return redirect('/theme/')
+def theme(request):
+    color = request.GET.get('color')
+
+    if color == 'light':
+        if Theme.objects.filter(user=request.user).exists():
+            theme = Theme.objects.get(user=request.user)
+            theme.user = request.user
+            theme.theme = 'white'
+            theme.save()
+        else:
+            theme = Theme()
+            theme.user = request.user
+            theme.theme = 'white'
+            theme.save()
+    elif color == 'dark':
+        if Theme.objects.filter(user=request.user).exists():
+            theme = Theme.objects.get(user=request.user)
+            theme.user = request.user
+            theme.theme = 'grey'
+            theme.save()
+        else:
+            theme = Theme()
+            theme.user = request.user
+            theme.theme = 'grey'
+            theme.save()
+
+    return redirect('/')
 
 
 #checks for legit orders

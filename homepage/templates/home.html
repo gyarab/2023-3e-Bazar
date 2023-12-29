@@ -8,15 +8,14 @@
 <style>
     div.box{
         height: 200px;
-        background-color: gray;
-        margin: 15px 0;
+        background-color: black;
+        margin: 20px 20px;
         text-align: center;
         color: white;
     }
 </style>
-</head >
-<body class="p-0 m-0 border-0 bd-example m-0 border-0">
-    <nav class="navbar bg-body-tertiary navbar-expand-lg" >
+<body class="p-0 m-0 border-0 bd-example m-0 border-0" style="background-color: {{color}};">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="https://avatars.githubusercontent.com/u/34084239?s=280&v=4">
                 <img src="https://avatars.githubusercontent.com/u/34084239?s=280&v=4" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -73,16 +72,28 @@
                 <form class="d-flex" role="search" method="post">
                     {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched_text">
-                    <button class="btn btn-outline-primary" type="submit" name="search">Search</button>
+                    <button class="btn btn-primary" type="submit" name="search">Search</button>
                 </form>
 
+                {% if request.user.is_authenticated %}
+                    {% if color == 'grey' %}
                 <div style="margin-left: 15px;">
                     <button class="btn btn-dark" type="submit">
+                        <a href="/theme?color=light"  class="link-light" style="text-decoration: none">
+                            Light mode
+                        </a>
+                    </button>
+                </div>
+                    {% else %}
+                <div style="margin-left: 15px;">
+                    <button class="btn btn-dark" type="submit" style="border: 2px; border-color: white;">
                         <a href="/theme?color=dark"  class="link-light" style="text-decoration: none">
                             Dark mode
                         </a>
                     </button>
                 </div>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </nav>
