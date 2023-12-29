@@ -28,9 +28,10 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/homepage/'
 
-SITE_ID = 2
+SITE_ID = 3
 
 INSTALLED_APPS = [
+    #default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

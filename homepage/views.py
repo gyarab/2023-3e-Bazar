@@ -1,22 +1,20 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import logout
-from django.core.mail import send_mail
+from datetime import datetime, timedelta
 
 from .forms import SignupForm
 from .models import Category, Order
 
 #home
 def index(request):
-    category = Category.objects.all()
-    order = Order.objects.all()
 
     orders = []
     if 'search' in request.POST:
-        searched = request.POST['searched_text']
-        orders = Order.objects.filter(Title__contains=searched)
+        orders = useable(request.POST['searched_text'], 0)
     else:
-        orders = order
+        orders = useable("", 0)
 
+    category = Category.objects.all()
     context = {
         "category": category,
         "order": orders,
@@ -25,16 +23,11 @@ def index(request):
 
 #categories
 def category(request, category_id):
-    c = get_object_or_404(Category, pk=category_id)
-    order = Order.objects.filter(category__name=c.name)
-
 
     if 'search' in request.POST:
-        searched = request.POST['searched_text']
-        #TODO kategorizovanej search
-        orders = Order.objects.filter(Title__contains=searched)
+        orders = useable(request.POST['searched_text'], category_id)
     else:
-        orders = order
+        orders = useable("", category_id)
 
     category = Category.objects.all()
     context = {
@@ -63,3 +56,46 @@ def out(request):
 
 def profile(request):
     return redirect('/profilepage/')
+
+
+#checks for legit orders
+def useable(searched, category_id):
+    if category_id == 0:
+        order = Order.objects.filter(expired=False)
+    else:
+        c = get_object_or_404(Category, pk=category_id)
+        order = Order.objects.filter(category__name=c.name).filter(expired=False)
+    
+    orders = []
+    for o in order:
+        if o.Title.__contains__(searched) and not is_expired(o):
+            orders.append(o)
+        elif searched == "" and not is_expired(o):
+            orders.append(o)
+
+    return orders
+    
+def is_expired(order):
+    if order.creation_date.replace(tzinfo=None) < (datetime.now() - timedelta(days=30)):
+        order.expired = True
+        order.save()
+        return True
+    else:
+        return False
+    
+#Test
+def generate(request):
+    Order.objects.all().delete()
+    for i in range(100):
+        o = Order()
+        o.Title = "Test" + str(i)
+        o.mail = "test" + str(i) + "@test.com"
+        o.price = i
+        o.phone_number = "123456789"
+        o.description = "test"
+        o.creation_date = datetime.now() + timedelta(days=30)
+        o.expired = False
+        o.creator = request.user
+        o.category = Category.objects.get(pk=1)
+        o.save()
+    

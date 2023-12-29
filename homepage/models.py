@@ -1,6 +1,6 @@
-
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.timezone import now
 
 class Category(models.Model):
     name = models.CharField(max_length=40)
@@ -17,12 +17,14 @@ class Order(models.Model):
     price = models.IntegerField()
     phone_number = models.CharField(max_length=255)
     description = models.TextField(blank = True, null = True)
+    creation_date = models.DateTimeField(default=now)
+    expired = models.BooleanField(default=False)
     creator = models.ForeignKey(User, related_name='Orders', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='Orders', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Title
-    
+        
     class Meta:
         verbose_name_plural = 'Orders'
 
