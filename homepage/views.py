@@ -56,8 +56,11 @@ def out(request):
     logout(request)
     return redirect('/')
 
-def profile(request):
+def profile():
     return redirect('/profilepage/')
+
+def theme():
+    return redirect('/theme/')
 
 
 #checks for legit orders

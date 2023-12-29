@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import MakeAnOrder
 from homepage.models import Order, OrderAttachment
 
+# fix the index method to actually save the order
 def index(request):
     if request.method == 'POST': 
         u = MakeAnOrder(request.POST)
@@ -18,11 +19,11 @@ def index(request):
                 mail = request.user.email,
             )
             o.save()
-            a = OrderAttachment.objects.create(
+            a = OrderAttachment.objects.create( 
                 picture1 = u.cleaned_data["picture1"],
-                picture2 = u.cleaned_data["picture1"],
-                picture3 = u.cleaned_data["picture1"],
-                picture4 = u.cleaned_data["picture1"],
+                picture2 = u.cleaned_data["picture2"],
+                picture3 = u.cleaned_data["picture3"],
+                picture4 = u.cleaned_data["picture4"],
                 order = o,
             )
             a.save()

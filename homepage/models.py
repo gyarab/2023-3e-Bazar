@@ -33,10 +33,17 @@ class OrderAttachment(models.Model):
     picture2 = models.ImageField(upload_to='images/', default='images/sedan.png')
     picture3 = models.ImageField(upload_to='images/', default='images/sedan.png')
     picture4 = models.ImageField(upload_to='images/', default='images/sedan.png')
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='attachment',on_delete=models.CASCADE)
 
     def __str__(self):
         return self.order.Title
     
     class Meta:
         verbose_name_plural = 'OrderAttachments'
+
+class Theme(models.Model):
+    theme = models.CharField(max_length=255)
+    user = models.ForeignKey(User, related_name='Themes', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
