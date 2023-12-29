@@ -47,3 +47,16 @@ class Theme(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    class Meta:
+        verbose_name_plural = 'Themes'
+    
+#TODO rating uzivatelu
+class Rating(models.Model):
+    rating = models.IntegerField()
+    user = models.ForeignKey(User, related_name='Ratings', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+    class Meta:
+        verbose_name_plural = 'Ratings'

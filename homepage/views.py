@@ -53,6 +53,21 @@ def category(request, category_id):
     }
     return render(request, 'home.html', context)
 
+def order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+
+    color = ''
+    if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
+        color = Theme.objects.get(user=request.user).theme
+    else:
+        color = 'white'
+
+    context = {
+        "order": order,
+        "color": color,
+    }
+    return render(request, 'order.html', context)
+
 #signup
 def signup(request):
     if request.method == 'POST': 
