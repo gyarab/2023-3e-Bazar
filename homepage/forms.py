@@ -29,4 +29,7 @@ class SignupForm(UserCreationForm):
         'placeholder': 'Zopakujte heslo',
     }))
 
+class rate(forms.Form):
+    rating = forms.IntegerField(min_value=0, max_value=10)
+
         

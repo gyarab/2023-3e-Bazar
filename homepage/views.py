@@ -2,8 +2,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import logout
 from datetime import datetime, timedelta
 
-from .forms import SignupForm
-from .models import Category, Order, Theme
+from .forms import SignupForm, rate
+from .models import Category, Order, Theme, Rating
 
 #home
 def index(request):
@@ -62,8 +62,17 @@ def order(request, order_id):
     else:
         color = 'white'
 
+    if request.method == 'POST': 
+        u = rate(request.POST)
+
+        if u.is_valid():
+            userRating(order_id, u.cleaned_data['rating'])
+    else:
+        u = rate()
+
     context = {
         "order": order,
+        "form": u,
         "color": color,
     }
     return render(request, 'order.html', context)
@@ -142,6 +151,20 @@ def is_expired(order):
         return True
     else:
         return False
+    
+def userRating(order_id, rating):
+
+    o = Order.objects.get(pk=order_id)
+    user = o.creator
+    if Rating.objects.filter(user=user).exists():
+        r = Rating.objects.get(user=user)
+        r.rating = (r.rating + rating) / 2
+        r.save()
+    else:
+        r = Rating()
+        r.user = user
+        r.rating = rating
+        r.save()
     
 #Test
 def generate(request):

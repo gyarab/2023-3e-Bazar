@@ -13,6 +13,99 @@
         text-align: center;
         color: white;
     }
+    div.box:hover{
+        background-color: lightblue;
+    }
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.1);
+        visibility: hidden;
+        background-color: {{ color }};
+        text-align: center;
+        width: 500px;
+        height: 500px;
+        padding: 50px;
+        border-radius: 10px;
+    }
+    
+    .popup h2{
+        font-size: 40px;
+        font-weight: 600;
+        margin: 20px 0 10px;
+    }
+
+    .range {
+        height: 80px;
+        width: 380px;
+        margin-bottom: 30px;
+        margin-top: 80px;
+    }
+    .range .range_value {
+        position: relative;
+        width: 100%;
+    }
+    .range .range_value span{
+        position: absolute;
+        height: 45px;
+        width: 45px;
+        background: #d3d3d3;
+        font-weight: 3000;
+        font-size: 10px;
+        top: -50px;
+        transform: translateX(-50%) scale(0);
+        transition: transform 0.3s ease-in-out;
+        transform-origin: bottom;;
+        line-height: 55px;
+        z-index: 2;
+    }
+    .range .range_value span.show{
+        transform: translateX(-50%) scale(1);
+    }
+    .range .range_value span:after{
+        position: absolute;
+        content: '';
+        height: 45px;
+        width: 45px;
+        background: grey;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        line-height: 55px;
+        border: 3px solid #fff;
+        z-index: -1;
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        border-bottom-left-radius: 50%;
+    }
+    .range .range_field {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .range .range_field .value {
+        position: absolute;
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .range .range_field .value.left {
+        left: -22px;
+    }
+    .range .range_field .value.right {
+        right: -60px;
+    }
+    .range .range_field input{
+        -webkit-appearance: none;
+        appearance: none;
+        height: 3px;
+        width: 100%;
+        background: #d3d3d3;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+    }
 </style>
 <body class="p-0 m-0 border-0 bd-example m-0 border-0" style="background-color: {{color}};">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
@@ -66,21 +159,7 @@
                             </li>
                             {% endfor %}
                         </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Cena
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="">Pod 1000</a></li>
-                            <li><a class="dropdown-item" href="">1000 - 2000</a></li>
-                            <li><a class="dropdown-item" href="">2000 - 4000</a></li>
-                            <li><a class="dropdown-item" href="">4000 - 8000</a></li>
-                            <li><a class="dropdown-item" href="">8000 - 16000</a></li>
-                            <li><a class="dropdown-item" href="">16000 - 25000</a></li>
-                            <li><a class="dropdown-item" href="">Nad 25000</a></li>
-                        </ul>
-                    </li>
+                    </li>               
                 </ul>
 
                 <form class="d-flex" role="search" method="post">
@@ -88,6 +167,12 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched_text">
                     <button class="btn btn-primary" type="submit" name="search">Search</button>
                 </form>
+
+                <div style="margin-left: 15px;">
+                    <button class="btn btn-dark" style="border: 2px; border-color: white;" onclick="openPopup()">
+                        Filtrovat
+                    </button>
+                </div>
 
                 {% if request.user.is_authenticated %}
                     {% if color == 'grey' %}
@@ -121,6 +206,58 @@
         </div>
     {% endfor %}
     </div>
+
+    <div class="popup" id="popup">
+        <h2>Filtrovat</h2>
+        <form action="." method="post">
+            {% csrf_token %}
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="ControlSelect">Kategorie</label>
+                <select class="form-control" id="ControlSelect" name="category">
+                    {% for category in category %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="range">
+                <div class="range_value">
+                    <span>150000</span>
+                </div>
+                <div class="range_field">
+                    <div class="value left">0</div>
+                    <input type="range" class="form-range" id="PriceRange" name="price" min="0" max="300000" value="150000" steps="1">
+                    <div class="value right">300000</div>
+                </div>
+            </div>
+            <button class="btn btn-success" type="submit" name="filter" onclick="closePopup()">Filtrovat</button>
+            <button class="btn btn-dark" onclick="closePopup">Zavřít</button>
+        </form>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openPopup(){
+            document.getElementById("popup").style.visibility = "visible";
+            document.getElementById("popup").style.transform = "translate(-50%, -50%) scale(1)";
+        }
+
+        function closePopup(){
+            document.getElementById("popup").style.visibility = "hidden";
+            document.getElementById("popup").style.transform = "translate(-50%, -50%) scale(0.1)";
+        }
+    </script>
+    <script>
+        const slideValue = document.querySelector(".range_value span");
+        const inputSlider = document.querySelector(".range_field input");
+        inputSlider.oninput = (()=>{
+            let value = inputSlider.value;
+            slideValue.textContent = value;
+            slideValue.style.left = (value/300000*100) + "%";
+            slideValue.classList.add("show");
+        });
+        inputSlider.onblur = (()=>{
+            slideValue.classList.remove("show");
+        });
+    </script>
 </body>
 </html>

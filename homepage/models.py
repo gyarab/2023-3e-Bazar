@@ -53,7 +53,7 @@ class Theme(models.Model):
     
 #TODO rating uzivatelu
 class Rating(models.Model):
-    rating = models.IntegerField()
+    rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, related_name='Ratings', on_delete=models.CASCADE)
 
     def __str__(self):
