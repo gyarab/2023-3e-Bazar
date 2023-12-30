@@ -8,47 +8,25 @@ from .models import Category, Order, Theme, Rating
 #home
 def index(request):
 
-    orders = []
-    if 'search' in request.POST:
-        orders = useable(request.POST['searched_text'], 0)
-    else:
-        orders = useable("", 0)
-
     color = ''
     if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
         color = Theme.objects.get(user=request.user).theme
     else:
         color = 'white'
+        
+    if 'filter' in request.POST or 'search' in request.POST:
+        temp = useable2(request.POST.get('searched_text', ""), request.POST.get('category', 0), request.POST.get('price', 0))
+        if not temp == 'failed':
+            orders = temp
+        else:
+            orders = 'failed'
+    else:
+        orders = useable2("", 0, 0)
 
     category = Category.objects.all()
     context = {
         "category": category,
         "order": orders,
-        "color": color,
-    }
-    return render(request, 'home.html', context)
-
-#categories
-def category(request, category_id):
-
-    if 'search' in request.POST:
-        orders = useable(request.POST['searched_text'], category_id)
-    else:
-        orders = useable("", category_id)
-
-    color = ''
-    if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
-        color = Theme.objects.get(user=request.user).theme
-    else:
-        color = 'white'
-
-    category = Category.objects.all()
-    selected_category = get_object_or_404(Category, pk=category_id)
-
-    context = {
-        "category": category,
-        "order": orders,
-        "selected_category": selected_category,
         "color": color,
     }
     return render(request, 'home.html', context)
@@ -152,8 +130,38 @@ def is_expired(order):
     else:
         return False
     
-def userRating(order_id, rating):
+def useable2(searched, category_id, price):
+    order = Order.objects.filter(expired=False)
 
+    for o in order:
+        if is_expired(o):
+            order = order.exclude(pk=o.pk)
+
+    if category_id == 0:
+        pass
+    else:
+        c = get_object_or_404(Category, pk=category_id)
+        for o in order:
+            if not o.category == c:
+                order = order.exclude(pk=o.pk)
+
+    if not price == 0:
+        for o in order:
+            if o.price > int(price):
+                order = order.exclude(pk=o.pk)
+    
+    if not searched == "":
+        for o in order:
+            if not o.Title.__contains__(searched):
+                order = order.exclude(pk=o.pk)
+    
+    if order.count() == 0:
+        return 'failed'
+    else:
+        return order
+
+
+def userRating(order_id, rating):
     o = Order.objects.get(pk=order_id)
     user = o.creator
     if Rating.objects.filter(user=user).exists():

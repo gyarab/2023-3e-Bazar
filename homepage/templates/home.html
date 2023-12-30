@@ -22,7 +22,7 @@
         left: 50%;
         transform: translate(-50%, -50%) scale(0.1);
         visibility: hidden;
-        background-color: {{ color }};
+        background-color: lightblue;
         text-align: center;
         width: 500px;
         height: 500px;
@@ -40,7 +40,7 @@
         height: 80px;
         width: 380px;
         margin-bottom: 30px;
-        margin-top: 80px;
+        margin-top: 30px;
     }
     .range .range_value {
         position: relative;
@@ -139,27 +139,7 @@
                             <li><a class="dropdown-item" href="{% url 'reset_password' %}">Nemůžete se přihlásit?</a></li>
                         </ul>
                         {% endif %}
-                    </li>
-                    <li class="nav-item dropdown">
-                        {% if selected_category %}
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ selected_category.name }}
-                        </a>
-                        {% else %}
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Kategorie
-                        </a>
-                        {% endif %}
-                        <ul class="dropdown-menu">
-                            {% for category in category %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'category' category.id %}">
-                                    {{ category.name }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>               
+                    </li>           
                 </ul>
 
                 <form class="d-flex" role="search" method="post">
@@ -198,6 +178,7 @@
     </nav>
 
     <div class="row g-2">
+    {% if not order == 'failed' %}
     {% for order in order %}
         <div class="col-12 col-sm-6" >
             <a href="{% url 'order' order.id %}" style="text-decoration: none">
@@ -205,21 +186,28 @@
             </a>
         </div>
     {% endfor %}
+    {% else %}
+        <div class="container" style="text-align: center; background-color: red; margin-top: 450px; border-radius: 50px;">
+            <h1>Žádné inzeráty</h1>
+        </div>
+    {% endif %}
     </div>
 
     <div class="popup" id="popup">
         <h2>Filtrovat</h2>
-        <form action="." method="post">
+        <form action="." method="post" role="filter">
             {% csrf_token %}
             <div class="form-group" style="margin-bottom: 15px;">
-                <label for="ControlSelect">Kategorie</label>
-                <select class="form-control" id="ControlSelect" name="category">
+                <label for="ControlSelect" style="margin-bottom: 15px;">Kategorie</label>
+                <select class="form-control" id="ControlSelect" name="category" style="background-color: white;">
+                    <option value="0">Any</option>
                     {% for category in category %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="range">
+                <label for="PriceRange">Cena</label>
                 <div class="range_value">
                     <span>150000</span>
                 </div>
