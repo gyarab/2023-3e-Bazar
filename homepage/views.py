@@ -7,7 +7,6 @@ from .models import Category, Order, Theme, Rating
 
 #home
 def index(request):
-
     color = ''
     if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
         color = Theme.objects.get(user=request.user).theme
@@ -15,13 +14,13 @@ def index(request):
         color = 'white'
         
     if 'filter' in request.POST or 'search' in request.POST:
-        temp = useable2(request.POST.get('searched_text', ""), request.POST.get('category', 0), request.POST.get('price', 0))
+        temp = useable(request.POST.get('searched_text', ""), request.POST.get('category', 0), request.POST.get('price', 0))
         if not temp == 'failed':
             orders = temp
         else:
             orders = 'failed'
     else:
-        orders = useable2("", 0, 0)
+        orders = useable("", 0, 0)
 
     category = Category.objects.all()
     context = {
@@ -55,7 +54,6 @@ def order(request, order_id):
     }
     return render(request, 'order.html', context)
 
-#signup
 def signup(request):
     if request.method == 'POST': 
         u = SignupForm(request.POST)
@@ -103,24 +101,6 @@ def theme(request):
             theme.save()
 
     return redirect('/')
-
-
-#checks for legit orders
-def useable(searched, category_id):
-    if category_id == 0:
-        order = Order.objects.filter(expired=False)
-    else:
-        c = get_object_or_404(Category, pk=category_id)
-        order = Order.objects.filter(category__name=c.name).filter(expired=False)
-    
-    orders = []
-    for o in order:
-        if o.Title.__contains__(searched) and not is_expired(o):
-            orders.append(o)
-        elif searched == "" and not is_expired(o):
-            orders.append(o)
-
-    return orders
     
 def is_expired(order):
     if order.creation_date.replace(tzinfo=None) < (datetime.now() - timedelta(days=30)):
@@ -130,7 +110,7 @@ def is_expired(order):
     else:
         return False
     
-def useable2(searched, category_id, price):
+def useable(searched, category_id, price):
     order = Order.objects.filter(expired=False)
 
     for o in order:
@@ -159,7 +139,6 @@ def useable2(searched, category_id, price):
         return 'failed'
     else:
         return order
-
 
 def userRating(order_id, rating):
     o = Order.objects.get(pk=order_id)

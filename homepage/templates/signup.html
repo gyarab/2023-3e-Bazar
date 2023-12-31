@@ -70,6 +70,27 @@
                     {% render_field form.password2 class+="form-control" %}
                 </div>
             </div>
+            {% if form.errors or form.non_field_errors %}
+            <div class="alert alert-danger" style="margin-top: 15px;">
+                <h4 class="alert-heading">Při registraci nastala chyba</h4>
+                <p>
+                    Zkontrolujte zda:
+                    <ul>
+                        <li>Už u nás nemáte založený účet</li>
+                        <li>Je emailová adresa platná</li>
+                        <li>Heslo je dostatečně dlouhé</li>
+                        <li>Heslo obsahuje alespoň jedno číslo</li>
+                        <li>Heslo obsahuje alespoň jedno velké písmeno</li>
+                        <li>Heslo obsahuje alespoň jedno malé písmeno</li>
+                        <li>Jsou hesla stejná</li>
+                    </ul>
+                </p>
+                <hr>
+                <p>Pokud již máte založený účet, můžete se přihlásit
+                    <a href="{% url 'login' %}">zde.</a>
+                </p>
+            </div>
+            {% endif %}
             <div class="row">
                 <div class="col-lg-2 col-md-3" style="margin-top: 15px">
                     <button class="btn btn-primary" type="submit">Zaregistrovat se</button>
@@ -85,17 +106,6 @@
                 </a>
             </button>
         </div>
-    </div>
-    
-        {% if form.errors or form.non_field_errors %}
-            <div>
-                {% for field in form %}
-                    {{ field.errors }}
-                {% endfor %}
-
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
     </div>
     {% endif %}
     
