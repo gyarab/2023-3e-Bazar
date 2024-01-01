@@ -5,20 +5,28 @@ from datetime import datetime, timedelta
 from .forms import SignupForm, rate
 from .models import Category, Order, Theme, Rating, Rating_Relation
 
-#home
+
+# home
 def index(request):
-    color = ''
-    if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
+    color = ""
+    if (
+        not request.user.is_anonymous
+        and Theme.objects.filter(user=request.user).exists()
+    ):
         color = Theme.objects.get(user=request.user).theme
     else:
-        color = 'white'
-        
-    if 'filter' in request.POST or 'search' in request.POST:
-        temp = useable(request.POST.get('searched_text', ""), request.POST.get('category', 0), request.POST.get('price', 0))
-        if not temp == 'failed':
+        color = "white"
+
+    if "filter" in request.POST or "search" in request.POST:
+        temp = useable(
+            request.POST.get("searched_text", ""),
+            request.POST.get("category", 0),
+            request.POST.get("price", 0),
+        )
+        if not temp == "failed":
             orders = temp
         else:
-            orders = 'failed'
+            orders = "failed"
     else:
         orders = useable("", 0, 0)
 
@@ -28,23 +36,27 @@ def index(request):
         "order": orders,
         "color": color,
     }
-    return render(request, 'home.html', context)
+    return render(request, "home.html", context)
+
 
 def order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
 
-    color = ''
-    if not request.user.is_anonymous and Theme.objects.filter(user=request.user).exists():
+    color = ""
+    if (
+        not request.user.is_anonymous
+        and Theme.objects.filter(user=request.user).exists()
+    ):
         color = Theme.objects.get(user=request.user).theme
     else:
-        color = 'white'
+        color = "white"
 
-    rated = ''
-    if request.method == 'POST': 
+    rated = ""
+    if request.method == "POST":
         u = rate(request.POST)
 
         if u.is_valid():
-            rated = userRating(order_id, u.cleaned_data['rating'], request.user)
+            rated = userRating(order_id, u.cleaned_data["rating"], request.user)
     else:
         u = rate()
 
@@ -54,56 +66,61 @@ def order(request, order_id):
         "color": color,
         "rated": rated,
     }
-    return render(request, 'order.html', context)
+    return render(request, "order.html", context)
+
 
 def signup(request):
-    if request.method == 'POST': 
+    if request.method == "POST":
         u = SignupForm(request.POST)
 
         if u.is_valid():
             u.save()
 
-            return redirect('/login/')
+            return redirect("/login/")
     else:
         u = SignupForm()
 
-    return render(request, 'signup.html', {'form' : u})
+    return render(request, "signup.html", {"form": u})
+
 
 def out(request):
     logout(request)
-    return redirect('/')
+    return redirect("/")
+
 
 def profile():
-    return redirect('/profilepage/')
+    return redirect("/profilepage/")
+
 
 def theme(request):
-    color = request.GET.get('color')
+    color = request.GET.get("color")
 
-    if color == 'light':
+    if color == "light":
         if Theme.objects.filter(user=request.user).exists():
             theme = Theme.objects.get(user=request.user)
             theme.user = request.user
-            theme.theme = 'white'
+            theme.theme = "white"
             theme.save()
         else:
             theme = Theme()
             theme.user = request.user
-            theme.theme = 'white'
+            theme.theme = "white"
             theme.save()
-    elif color == 'dark':
+    elif color == "dark":
         if Theme.objects.filter(user=request.user).exists():
             theme = Theme.objects.get(user=request.user)
             theme.user = request.user
-            theme.theme = 'grey'
+            theme.theme = "grey"
             theme.save()
         else:
             theme = Theme()
             theme.user = request.user
-            theme.theme = 'grey'
+            theme.theme = "grey"
             theme.save()
 
-    return redirect('/')
-    
+    return redirect("/")
+
+
 def is_expired(order):
     if order.creation_date.replace(tzinfo=None) < (datetime.now() - timedelta(days=30)):
         order.expired = True
@@ -111,7 +128,8 @@ def is_expired(order):
         return True
     else:
         return False
-    
+
+
 def useable(searched, category_id, price):
     order = Order.objects.filter(expired=False)
 
@@ -131,24 +149,27 @@ def useable(searched, category_id, price):
         for o in order:
             if o.price > int(price):
                 order = order.exclude(pk=o.pk)
-    
+
     if not searched == "":
         for o in order:
             if not o.Title.__contains__(searched):
                 order = order.exclude(pk=o.pk)
-    
+
     if order.count() == 0:
-        return 'failed'
+        return "failed"
     else:
         return order
+
 
 def userRating(order_id, rating, creator):
     o = Order.objects.get(pk=order_id)
     subject = o.creator
 
-    relations = Rating_Relation.objects.filter(rating_subject=subject).filter(rating_creator=creator)
+    relations = Rating_Relation.objects.filter(rating_subject=subject).filter(
+        rating_creator=creator
+    )
     if relations.exists():
-        return 'failed'
+        return "failed"
     else:
         if Rating.objects.filter(user=subject).exists():
             r = Rating.objects.get(user=subject)
@@ -159,15 +180,15 @@ def userRating(order_id, rating, creator):
             r.user = subject
             r.rating = rating
             r.save()
-        
+
         relation = Rating_Relation()
         relation.rating_subject = subject
         relation.rating_creator = creator
         relation.save()
-        return 'success'
+        return "success"
 
-    
-#Test
+
+# Test
 def generate(request):
     Order.objects.all().delete()
     for i in range(100):

@@ -70,6 +70,10 @@
                     {% render_field form.password2 class+="form-control" %}
                 </div>
             </div>
+            <div class="col-md-4" style="margin-top: 15px;">
+                <label class="form-label">Zadejte text zobrazený na obrázku: </label>
+                {% render_field form.captcha class+="form-control" style+="margin-top: 7px;" %}
+            </div>
             {% if form.errors or form.non_field_errors %}
             <div class="alert alert-danger" style="margin-top: 15px;">
                 <h4 class="alert-heading">Při registraci nastala chyba</h4>
@@ -102,7 +106,7 @@
             <button class="btn btn-success" type="submit">
                 <a href="{% provider_login_url 'google' %}?next=/" class="link-light" style="text-decoration: none">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="google logo" height="23" width="23">
-                    Přihlásit se přes Google
+                    Přihlásit se google účtem                
                 </a>
             </button>
         </div>
