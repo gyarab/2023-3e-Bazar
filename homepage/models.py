@@ -51,7 +51,6 @@ class Theme(models.Model):
     class Meta:
         verbose_name_plural = 'Themes'
     
-#TODO rating uzivatelu
 class Rating(models.Model):
     rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, related_name='Ratings', on_delete=models.CASCADE)
@@ -60,3 +59,10 @@ class Rating(models.Model):
         return self.user.username
     class Meta:
         verbose_name_plural = 'Ratings'
+
+class Rating_Relation(models.Model):
+    rating_subject = models.ForeignKey(User, related_name='Rating_Subjects', on_delete=models.CASCADE)
+    rating_creator = models.ForeignKey(User, related_name='Rating_Creators', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.rating_subject.username + " hodnotil " + self.rating_creator.username

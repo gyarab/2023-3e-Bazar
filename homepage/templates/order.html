@@ -11,6 +11,11 @@
     <form action="." method="post">
         {% csrf_token %}
         {{ form }}
+        {% if rated == 'success' %}
+        <p>Uživatel byl ohodnocen</p>
+        {% elif rated == 'failed' %}
+        <p>Uživatele jste již hodnotili</p>
+        {% endif %}
         <button class="btn btn-success" type="submit">submit test rate form</button>
     </form>
 </body>

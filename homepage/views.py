@@ -3,7 +3,7 @@ from django.contrib.auth import logout
 from datetime import datetime, timedelta
 
 from .forms import SignupForm, rate
-from .models import Category, Order, Theme, Rating
+from .models import Category, Order, Theme, Rating, Rating_Relation
 
 #home
 def index(request):
@@ -39,11 +39,12 @@ def order(request, order_id):
     else:
         color = 'white'
 
+    rated = ''
     if request.method == 'POST': 
         u = rate(request.POST)
 
         if u.is_valid():
-            userRating(order_id, u.cleaned_data['rating'])
+            rated = userRating(order_id, u.cleaned_data['rating'], request.user)
     else:
         u = rate()
 
@@ -51,6 +52,7 @@ def order(request, order_id):
         "order": order,
         "form": u,
         "color": color,
+        "rated": rated,
     }
     return render(request, 'order.html', context)
 
@@ -140,18 +142,30 @@ def useable(searched, category_id, price):
     else:
         return order
 
-def userRating(order_id, rating):
+def userRating(order_id, rating, creator):
     o = Order.objects.get(pk=order_id)
-    user = o.creator
-    if Rating.objects.filter(user=user).exists():
-        r = Rating.objects.get(user=user)
-        r.rating = (r.rating + rating) / 2
-        r.save()
+    subject = o.creator
+
+    relations = Rating_Relation.objects.filter(rating_subject=subject).filter(rating_creator=creator)
+    if relations.exists():
+        return 'failed'
     else:
-        r = Rating()
-        r.user = user
-        r.rating = rating
-        r.save()
+        if Rating.objects.filter(user=subject).exists():
+            r = Rating.objects.get(user=subject)
+            r.rating = (r.rating + rating) / 2
+            r.save()
+        else:
+            r = Rating()
+            r.user = subject
+            r.rating = rating
+            r.save()
+        
+        relation = Rating_Relation()
+        relation.rating_subject = subject
+        relation.rating_creator = creator
+        relation.save()
+        return 'success'
+
     
 #Test
 def generate(request):
