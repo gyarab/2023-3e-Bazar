@@ -65,7 +65,7 @@
                 </div>
                     {% else %}
                 <div style="margin-left: 15px;">
-                    <button class="btn btn-dark" type="submit" style="border: 2px; border-color: white;">
+                    <button class="btn btn-dark" type="submit">
                         <a href="/theme?color=dark"  class="link-light" style="text-decoration: none">
                             Dark mode
                         </a>
@@ -73,6 +73,12 @@
                 </div>
                     {% endif %}
                 {% endif %}
+                <div class="d-flex">
+                    <form class="d-flex" role="search" method="post">
+                        <input type="checkbox" class="checkbox" id="mode-toggle">
+                        <label class="mode-label" for="mode-toggle"></label>
+                    </form>
+                </div>
             </div>
         </div>
     </nav>
