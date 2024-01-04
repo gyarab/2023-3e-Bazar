@@ -30,5 +30,11 @@
     {% else %}
     <p>Nejste zaregistrováni, proto nemůžete hodnotit uživatele</p>
     {% endif %}
+    <br>
+    <h2>Comments</h2>
+    {% for comment in comments %}
+    <p>{{ comment.comment }}</p>
+    <br>
+    {% endfor %}
   </body>
 </html>

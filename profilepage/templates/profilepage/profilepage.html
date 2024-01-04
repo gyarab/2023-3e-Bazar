@@ -4,38 +4,63 @@
 
     <form method="post" action=".">
         {% csrf_token %}
+        {% if form1 %}
         <div>
             <h4>Title</h4>
-            {{ form.title }}
+            {{ form1.title }}
         </div>
 
         <div>
             <h4>Description</h4>
-            {{ form.description }}
+            {{ form1.description }}
         </div>
 
         <div>
             <h4>price</h4>
-            {{ form.price }}
+            {{ form1.price }}
         </div>
 
         <div>
             <h4>phone_number</h4>
-            {{ form.phone_number }}
+            {{ form1.phone_number }}
         </div>
 
         <div>
             <h4>category</h4>
-            {{ form.category }}
+            {{ form1.category }}
         </div>
 
         <div>
             <h4>pictures</h4>
-            {{ form.picture1 }}
-            {{ form.picture2 }}
-            {{ form.picture3 }}
-            {{ form.picture4 }}
+            {{ form1.picture1 }}
+            {{ form1.picture2 }}
+            {{ form1.picture3 }}
+            {{ form1.picture4 }}
         </div>
+        {% else %}
+
+        <div>
+            <h4>Country</h4>
+            {{ form2.Country }}
+        </div>
+
+        <div>
+            <h4>City</h4>
+            {{ form2.City }}
+        </div>
+
+        <div>
+            <h4>Street</h4>
+            {{ form2.Street }}
+        </div>
+        <div>
+            <h4>Postal_code</h4>
+            {{ form2.Postal_code }}
+        </div>
+        {% endif %}
+
+
+
 
         {% if form.errors or form.non_field_errors %}
             <div>

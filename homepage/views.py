@@ -10,6 +10,13 @@ from .models import Category, Order, Theme, User_attachments, Rating_Relation
 
 # home
 def index(request):
+    if (
+        not request.user.is_anonymous
+        and not User_attachments.objects.filter(user=request.user).exists()
+    ):
+        att = User_attachments()
+        att.user = request.user
+        att.save()
     color = ""
     if (
         not request.user.is_anonymous
@@ -74,11 +81,14 @@ def order(request, order_id):
     else:
         u = rate()
 
+    comments = Rating_Relation.objects.filter(rating_subject=order.creator)
+
     context = {
         "order": order,
         "form": u,
         "color": color,
         "rated": rated,
+        "comments": comments,
     }
     return render(request, "order.html", context)
 
@@ -196,7 +206,7 @@ def userRating(order_id, rating, comment, creator):
             r.save()
 
         relation = Rating_Relation()
-        relation.rating = comment
+        relation.comment = comment
         relation.rating_subject = subject
         relation.rating_creator = creator
         relation.save()

@@ -46,7 +46,7 @@ class OrderAttachment(models.Model):
         return self.order.Title
 
     class Meta:
-        verbose_name_plural = "OrderAttachments"
+        verbose_name_plural = "Order_Attachments"
 
 
 class Theme(models.Model):
