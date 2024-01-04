@@ -10,14 +10,14 @@ class LoginForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Jmeno uzivatele",
+                "placeholder": "Jmeno přes které vás oslovujeme",
             }
         )
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                "placeholder": "Heslo",
+                "placeholder": "Vaše bezpečné heslo",
             }
         )
     )
@@ -33,14 +33,14 @@ class SignupForm(UserCreationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Jmeno uzivatele",
+                "placeholder": "Jmeno uzivatele aneb jmeno, kterým vás budeme oslovovat",
             }
         )
     )
     email = forms.CharField(
         widget=forms.EmailInput(
             attrs={
-                "placeholder": "Email adresa",
+                "placeholder": "Emailová adresa přes kterou vás budeme kontaktovat",
             }
         )
     )
@@ -62,3 +62,10 @@ class SignupForm(UserCreationForm):
 
 class rate(forms.Form):
     rating = forms.IntegerField(min_value=0, max_value=10)
+    comment = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Komentář",
+            }
+        )
+    )

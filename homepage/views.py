@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import logout
 from datetime import datetime, timedelta
+import requests
+import json
 
 from .forms import SignupForm, rate
-from .models import Category, Order, Theme, Rating, Rating_Relation
+from .models import Category, Order, Theme, User_attachments, Rating_Relation
 
 
 # home
@@ -42,6 +44,13 @@ def index(request):
 def order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
 
+    # Test - mozna se bude hodit
+    # ip1 = requests.get("https://api.ipify.org?format=json")
+    # ip_data = json.loads(ip1.text)
+    # res1 = requests.get("http://ip-api.com/json/" + ip_data["ip"])
+    # d1 = res1.text
+    # data1 = json.loads(d1)
+
     color = ""
     if (
         not request.user.is_anonymous
@@ -56,7 +65,12 @@ def order(request, order_id):
         u = rate(request.POST)
 
         if u.is_valid():
-            rated = userRating(order_id, u.cleaned_data["rating"], request.user)
+            rated = userRating(
+                order_id,
+                u.cleaned_data["rating"],
+                u.cleaned_data["comment"],
+                request.user,
+            )
     else:
         u = rate()
 
@@ -88,7 +102,7 @@ def out(request):
     return redirect("/")
 
 
-def profile():
+def profile(request):
     return redirect("/profilepage/")
 
 
@@ -161,7 +175,7 @@ def useable(searched, category_id, price):
         return order
 
 
-def userRating(order_id, rating, creator):
+def userRating(order_id, rating, comment, creator):
     o = Order.objects.get(pk=order_id)
     subject = o.creator
 
@@ -171,17 +185,18 @@ def userRating(order_id, rating, creator):
     if relations.exists():
         return "failed"
     else:
-        if Rating.objects.filter(user=subject).exists():
-            r = Rating.objects.get(user=subject)
+        if User_attachments.objects.filter(user=subject).exists():
+            r = User_attachments.objects.get(user=subject)
             r.rating = (r.rating + rating) / 2
             r.save()
         else:
-            r = Rating()
+            r = User_attachments()
             r.user = subject
             r.rating = rating
             r.save()
 
         relation = Rating_Relation()
+        relation.rating = comment
         relation.rating_subject = subject
         relation.rating_creator = creator
         relation.save()

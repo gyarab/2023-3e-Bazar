@@ -60,15 +60,21 @@ class Theme(models.Model):
         verbose_name_plural = "Themes"
 
 
-class Rating(models.Model):
+class User_attachments(models.Model):
     rating = models.IntegerField(default=0)
-    user = models.ForeignKey(User, related_name="Ratings", on_delete=models.CASCADE)
+    Country = models.CharField(max_length=255, default="")
+    City = models.CharField(max_length=255, default="")
+    Street = models.CharField(max_length=255, default="")
+    Postal_code = models.CharField(max_length=255, default="")
+    user = models.ForeignKey(
+        User, related_name="User_attachments", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.user.username
 
     class Meta:
-        verbose_name_plural = "Ratings"
+        verbose_name_plural = "User_attachments"
 
 
 class Rating_Relation(models.Model):
@@ -78,6 +84,7 @@ class Rating_Relation(models.Model):
     rating_creator = models.ForeignKey(
         User, related_name="Rating_Creators", on_delete=models.CASCADE
     )
+    comment = models.TextField(default="")
 
     def __str__(self):
         return (
