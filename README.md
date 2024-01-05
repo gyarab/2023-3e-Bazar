@@ -10,7 +10,7 @@ Radim Tříletý
 
 ## Faker
 
-Vojtěch Kadlec
+Vojtěch Kadlec - zacni delat nebo ti snizim plat
 
 ---
 
