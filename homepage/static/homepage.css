@@ -144,7 +144,7 @@ div.box:hover{
     border-bottom: 1px dotted black;
 }
   
-  .mode_tip .mode_tip_text {
+.mode_tip .mode_tip_text {
     visibility: hidden;
     width: 120px;
     top: 100%;
@@ -158,7 +158,11 @@ div.box:hover{
     position: absolute;
     z-index: 1;
 }
-  
-  .mode_tip:hover .mode_tip_text {
+.mode_tip:hover .mode_tip_text {
     visibility: visible;
+}
+
+.button-mode-dark:hover{
+    background-color: red;
+    color: black;
 }

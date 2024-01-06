@@ -51,7 +51,7 @@ def index(request):
 def order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
 
-    # Test - mozna se bude hodit
+    # Test - mozna se bude hodit - https://www.youtube.com/watch?v=7lhlXDHks_s = oba dili
     # ip1 = requests.get("https://api.ipify.org?format=json")
     # ip_data = json.loads(ip1.text)
     # res1 = requests.get("http://ip-api.com/json/" + ip_data["ip"])

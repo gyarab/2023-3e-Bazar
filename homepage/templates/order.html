@@ -10,31 +10,36 @@
     <title>{{ order.Title }}</title>
   </head>
   <body style="background-color: {{color}};">
-    {{ order.Title }}
-    <p>Tvůrce je {{ order.creator }}</p>
-    {% if request.user.is_authenticated %}
-    <form action="." method="post">
-      {% csrf_token %} 
-      {{ form.rating }} 
-      <br>
-      {{ form.comment }} 
-      {% if rated == 'success' %}
-      <p>Uživatel byl ohodnocen</p>
-      {% elif rated == 'failed' %}
-      <p>Uživatele jste již hodnotili</p>
-      {% endif %}
-      <button class="btn btn-success" type="submit">
-        submit test rate form
+    <div class="container"> 
+      <button class="btn btn-dark">
+        <a class="link-light" href="{% url 'home' %}" style="text-decoration: none;">Back</a>
       </button>
-    </form>
-    {% else %}
-    <p>Nejste zaregistrováni, proto nemůžete hodnotit uživatele</p>
-    {% endif %}
-    <br>
-    <h2>Comments</h2>
-    {% for comment in comments %}
-    <p>{{ comment.comment }}</p>
-    <br>
-    {% endfor %}
+      {{ order.Title }}
+      <p>Tvůrce je {{ order.creator }}</p>
+      {% if request.user.is_authenticated %}
+      <form action="." method="post">
+        {% csrf_token %} 
+        {{ form.rating }} 
+        <br>
+        {{ form.comment }} 
+        {% if rated == 'success' %}
+        <p>Uživatel byl ohodnocen</p>
+        {% elif rated == 'failed' %}
+        <p>Uživatele jste již hodnotili</p>
+        {% endif %}
+        <button class="btn btn-success" type="submit">
+          submit test rate form
+        </button>
+      </form>
+      {% else %}
+      <p>Nejste zaregistrováni, proto nemůžete hodnotit uživatele</p>
+      {% endif %}
+      <br>
+      <h2>Comments</h2>
+      {% for comment in comments %}
+      <p>{{ comment.comment }}</p>
+      <br>
+      {% endfor %}
+    </div>
   </body>
 </html>
