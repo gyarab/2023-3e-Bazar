@@ -112,6 +112,14 @@ def out(request):
     return redirect("/")
 
 
+def delete(request):
+    if request.user.is_authenticated:
+        User_attachments.objects.get(user=request.user).delete()
+        request.user.delete()
+        logout(request)
+    return redirect("/")
+
+
 def profile(request):
     return redirect("/profilepage/")
 

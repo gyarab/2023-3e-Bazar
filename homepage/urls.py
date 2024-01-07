@@ -18,4 +18,5 @@ urlpatterns = [
     path("logout/", views.out, name="logout"),
     path("profile/", views.profile, name="profile"),
     path("theme/", views.theme, name="theme"),
+    path("delete/", views.delete, name="delete"),
 ]

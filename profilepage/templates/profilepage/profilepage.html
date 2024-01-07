@@ -1,5 +1,5 @@
 {% block content%}
-<div>
+<div class="container">
     <h1>Create Order</h1>
 
     <form method="post" action=".">
@@ -74,5 +74,8 @@
 
         <button type="Submit">Create</button>
     </form>
+    <button class="btn btn-dark">
+        <a class="link-light" href="{% url 'delete' %}" style="text-decoration: none;">Delete account</a>
+      </button>
 </div>
 {% endblock %}
