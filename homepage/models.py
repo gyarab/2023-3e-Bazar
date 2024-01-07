@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.timezone import now
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -18,7 +19,7 @@ class Order(models.Model):
     mail = models.CharField(max_length=255)
     price = models.IntegerField()
     phone_number = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
     creation_date = models.DateTimeField(default=now)
     expired = models.BooleanField(default=False)
     creator = models.ForeignKey(User, related_name="Orders", on_delete=models.CASCADE)
@@ -31,22 +32,6 @@ class Order(models.Model):
 
     class Meta:
         verbose_name_plural = "Orders"
-
-
-class OrderAttachment(models.Model):
-    picture1 = models.ImageField(upload_to="images/", default="images/sedan.png")
-    picture2 = models.ImageField(upload_to="images/", default="images/sedan.png")
-    picture3 = models.ImageField(upload_to="images/", default="images/sedan.png")
-    picture4 = models.ImageField(upload_to="images/", default="images/sedan.png")
-    order = models.ForeignKey(
-        Order, related_name="attachment", on_delete=models.CASCADE
-    )
-
-    def __str__(self):
-        return self.order.Title
-
-    class Meta:
-        verbose_name_plural = "Order_Attachments"
 
 
 class Theme(models.Model):

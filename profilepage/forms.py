@@ -8,10 +8,6 @@ class MakeAnOrder(forms.Form):
     category = forms.ModelChoiceField(Category.objects.all())
     price = forms.IntegerField()
     phone_number = forms.CharField(max_length=11)
-    picture1 = forms.ImageField()
-    picture2 = forms.ImageField()
-    picture3 = forms.ImageField()
-    picture4 = forms.ImageField()
 
 
 class Location(forms.Form):

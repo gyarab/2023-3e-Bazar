@@ -16,6 +16,7 @@
       </button>
       {{ order.Title }}
       <p>Tvůrce je {{ order.creator }}</p>
+      {{ order.description|safe }}
       {% if request.user.is_authenticated %}
       <form action="." method="post">
         {% csrf_token %} 

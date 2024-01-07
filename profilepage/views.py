@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import MakeAnOrder, Location
-from homepage.models import Order, OrderAttachment, User_attachments
+from homepage.models import Order, User_attachments
 from datetime import datetime
 
 
@@ -26,13 +26,6 @@ def index(request):
                 o.creator = request.user
                 o.mail = request.user.email
                 o.save()
-                a = OrderAttachment()
-                a.picture1 = (u.cleaned_data["picture1"],)
-                a.picture2 = (u.cleaned_data["picture2"],)
-                a.picture3 = (u.cleaned_data["picture3"],)
-                a.picture4 = (u.cleaned_data["picture4"],)
-                a.order = o
-                a.save()
                 return redirect("/profilepage")
 
         form1 = MakeAnOrder()

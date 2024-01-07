@@ -5,38 +5,10 @@
     <form method="post" action=".">
         {% csrf_token %}
         {% if form1 %}
-        <div>
-            <h4>Title</h4>
-            {{ form1.title }}
-        </div>
 
-        <div>
-            <h4>Description</h4>
-            {{ form1.description }}
-        </div>
-
-        <div>
-            <h4>price</h4>
-            {{ form1.price }}
-        </div>
-
-        <div>
-            <h4>phone_number</h4>
-            {{ form1.phone_number }}
-        </div>
-
-        <div>
-            <h4>category</h4>
-            {{ form1.category }}
-        </div>
-
-        <div>
-            <h4>pictures</h4>
-            {{ form1.picture1 }}
-            {{ form1.picture2 }}
-            {{ form1.picture3 }}
-            {{ form1.picture4 }}
-        </div>
+        {{ form1.media }}
+        {{ form1.as_p }}
+       
         {% else %}
 
         <div>

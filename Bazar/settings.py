@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "profilepage",
     # others
     "widget_tweaks",
+    "ckeditor",
     # google stuff
     "django.contrib.sites",
     "allauth",

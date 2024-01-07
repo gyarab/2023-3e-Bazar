@@ -10,6 +10,7 @@ psycopg2 = "*"
 pillow = "*"
 numpy = "*"
 django-simple-captcha = "*"
+django-ckeditor = "*"
 
 [dev-packages]
 
