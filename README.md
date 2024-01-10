@@ -14,5 +14,5 @@ Vojtěch Kadlec - zacni delat nebo ti snizim plat
 
 ---
 
-1.kde frontend?
-2.Hláška století: Kde je moje HTML?
+1. kde frontend?
+2. Hláška století: Kde je moje HTML?
