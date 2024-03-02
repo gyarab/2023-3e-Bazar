@@ -1,6 +1,6 @@
 div.box {
-            background-color: whitesmoke;
-            margin: 15px 0;
+    background-color: whitesmoke;
+    margin: 15px 0;
 }
 body {
     background-color: #f8f9fa;
@@ -10,10 +10,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-h2 {
-    text-align: center;
-    color: #007bff;
 }
 .Big {
     color: #343a40;
@@ -31,4 +27,35 @@ h2 {
 .btn-primary:hover {
     background-color: #0056b3;
     border-color: #0056b3;
+}
+
+form.order1 {
+    position: fixed;
+    margin: 20px;
+    text-align: center;
+    margin-right: 0;
+    width: 47%;
+}
+
+form label.order2 {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #cf8a12;
+}
+
+form input,
+form textarea.order3 {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+div.offer_box{
+    height: 170px;
+    margin: 20px 20px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: black;
 }

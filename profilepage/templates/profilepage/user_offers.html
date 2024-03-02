@@ -9,39 +9,8 @@
    <title>Order</title>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-   <style>
-
-      form.order1 {
-         position: fixed;
-         margin: 20px;
-         text-align: center;
-         margin-right: 0;
-         width: 47%;
-      }
-
-      form label.order2 {
-         display: block;
-         margin: 10px 0;
-         font-weight: bold;
-         color: #cf8a12;
-      }
-
-      form input,
-      form textarea.order3 {
-         width: 100%;
-         padding: 8px;
-         margin-bottom: 10px;
-         box-sizing: border-box;
-      }
-
-      div.box{
-         height: 170px;
-         margin: 20px 20px;
-         text-align: center;
-         border-radius: 10px;
-         background-color: black;
-      }
-   </style>
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'profilepage.css' %}">
 </head>
 <body class="p-0 m-0 border-0 bd-example m-0 border-0" style="background-color: {{ att.theme }};">
    {% if att.theme == 'black' %}
@@ -81,9 +50,9 @@
                
             {% for orders in orders %}
             {% if att.theme == 'black' %}
-            <div class="box" style="background-color: white;">
+            <div class="offer_box" style="background-color: white;">
             {% else %}
-            <div class="box">
+            <div class="offer_box">
             {% endif %}
                <a href="{% url 'offer' orders.id %}" class="color: white" style="text-decoration: none;">{{ orders.Title }}</a>
             </div>

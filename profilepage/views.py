@@ -192,7 +192,7 @@ def offer(request, offer_id):
         "att": att,
     }
 
-    return render(request, "profilepage/your_order_detail2.html", context)
+    return render(request, "profilepage/your_order_detail.html", context)
 
 # refreshes your offer 
 def refresh(request, offer_id):
