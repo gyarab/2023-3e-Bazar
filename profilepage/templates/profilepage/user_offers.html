@@ -50,7 +50,7 @@
    <nav class="navbar navbar-light bg-light navbar-expand-lg">
    {% endif %}
          <div class="container">
-            <a class="navbar-brand" href="{{request.META.HTTP_REFERER|escape}}">
+            <a class="navbar-brand" href="{% url 'home' %}">
                <i class="bi bi-arrow-return-left"></i>
             </a>
             <a class="navbar-brand" href="#">{{ request.user.first_name }} {{ request.user.last_name }}</a>
@@ -93,7 +93,7 @@
          {% if show %}
          <div class="col-md-6">
             {% if att.theme == 'black' %}
-            <form class="order1">
+            <form class="order1" method="post" action=".">
                {% csrf_token %}
                <label class="form-label" style="color: white;">Titulek</label>
                {% render_field form.title class+="form-control" %}
@@ -107,10 +107,10 @@
                <label class="form-label" style="margin-top: 10px; color: white;">Cena</label>
                <br>  
                {% render_field form.price class+="form-control" %}
-               <button class="form-button btn btn-light" style="margin-top: 10px;" type="submit">Vytvořit</button>
+               <button type="submit" class="form-button btn btn-light" style="margin-top: 10px;" type="submit">Vytvořit</button>
             </form>
             {% else %}
-            <form class="order1">
+            <form class="order1" method="post" action=".">
                {% csrf_token %}
                <label class="form-label">Titulek</label>
                {% render_field form.title class+="form-control" %}
@@ -124,7 +124,7 @@
                <label class="form-label" style="margin-top: 10px;">Cena</label>
                <br>  
                {% render_field form.price class+="form-control" %}
-               <button class="form-button btn btn-dark" style="margin-top: 10px;" type="submit">Vytvořit</button>
+               <button type="submit" class="form-button btn btn-dark" style="margin-top: 10px;" type="submit">Vytvořit</button>
             </form>
             {% endif %}
          </div>

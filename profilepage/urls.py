@@ -18,4 +18,6 @@ urlpatterns = [
     path("confirmed/<int:offer_id>/", views.confirmed, name="confirmed"),
     # path to the html that tells you that your payment failed
     path("canceled/<int:offer_id>/", views.cancel, name="canceled"),
+    # delete offer path
+    path("delete/<int:offer_id>/", views.delete_offer, name="delete_offer"),
 ]

@@ -41,6 +41,7 @@ class User_attachments(models.Model):
     Postal_code = models.CharField(max_length=255, default="")
     phone_number = models.CharField(max_length=255, default="")
     theme = models.CharField(max_length=255, default="")
+    offer_count = models.IntegerField(default=0)
     # every on of those has its user
     user = models.ForeignKey(
         User, related_name="User_attachments", on_delete=models.CASCADE

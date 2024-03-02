@@ -21,7 +21,7 @@
       <nav class="navbar navbar-light bg-light navbar-expand-lg">
       {% endif %}
          <div class="container">
-            <a class="navbar-brand" href="{{request.META.HTTP_REFERER|escape}}">
+            <a class="navbar-brand" href="{% url 'home' %}">
                <i class="bi bi-arrow-return-left"></i>
             </a>
             <a class="navbar-brand" href="#">{{ request.user.first_name }} {{ request.user.last_name }}</a>

@@ -5,8 +5,9 @@ from homepage.models import chat, message, Order
 from django.contrib.auth.models import User
 import datetime
 
-
+# displays the chat with all of its messages
 def Chat(request, order_id):
+    # finds or cretes the correct chat
     order = Order.objects.get(id=order_id)
     if chat.objects.filter(order_id=order_id).exists():
         chat_obj = chat.objects.get(order_id=order_id)
@@ -15,6 +16,7 @@ def Chat(request, order_id):
             user_1=request.user, user_2=order.creator, order_id=order_id
         )
 
+    # creates a new message
     if request.method == "POST":
         if request.POST.get("message"):
             message.objects.create(
@@ -23,8 +25,8 @@ def Chat(request, order_id):
                 message=request.POST.get("message"),
             )
 
+    # context
     messages = message.objects.filter(chat=chat_obj)
-
     context = {
         "chat": chat_obj,
         "messages": messages,
