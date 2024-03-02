@@ -1,0 +1,7 @@
+venv/
+Bazar.sock
+Pipfile
+Pipfile.lock
+config.json
+TODO
+.vscode
