@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 
-
+# form used for users login in
 class LoginForm(AuthenticationForm):
 
     username = forms.CharField(
@@ -21,7 +21,7 @@ class LoginForm(AuthenticationForm):
         )
     )
 
-
+# form used for users registration
 class SignupForm(UserCreationForm):
     captcha = CaptchaField()
 
@@ -65,7 +65,7 @@ class SignupForm(UserCreationForm):
         )
     )
 
-
+# simple form used for rating users
 class rate(forms.Form):
     rating = forms.IntegerField(min_value=0, max_value=10)
     comment = forms.CharField(

@@ -1,48 +1,56 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
-from .forms import MakeAnOrder, User_attachment, User_attachmentS
+from .forms import MakeAnOrder, adress
 from homepage.models import Order, User_attachments, Rating_Relation, chat
 from datetime import datetime
-
-# paypal
-from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import settings
 import uuid
 from django.urls import reverse
 
+# paypal
+from paypal.standard.forms import PayPalPaymentsForm
 
+# personal info page
 def personal_info(request):
     att = User_attachments.objects.get(user=request.user)
 
+    # used for editing user details
     if request.method == "POST":
+        # phone_number
         if request.POST.get("edit_phone_number"):
             att.phone_number = request.POST.get("edit_phone_number")
             att.save()
+        # name
         if request.POST.get("edit_name"):
             user = request.user
             user.first_name = request.POST.get("edit_name")
             user.save()
+        # surname
         if request.POST.get("edit_surname"):
             user = request.user
             user.last_name = request.POST.get("edit_surname")
             user.save()
+        # city
         if request.POST.get("edit_city"):
             att.City = request.POST.get("edit_city")
             att.save()
+        # street
         if request.POST.get("edit_street"):
             att.Street = request.POST.get("edit_street")
             att.save()
+        # postal code
         if request.POST.get("edit_postal"):
             att.Postal_code = request.POST.get("edit_postal")
             att.save()
+        # used for adding a phone number if it is not added
         if request.POST.get("create_phone_number"):
             att.phone_number = request.POST.get("create_phone_number")
             att.save()
 
-    form = User_attachmentS()
-
+    # used for adding an adress if it is not added
+    form = adress()
     if request.method == "POST":
-        u = User_attachmentS(request.POST)
+        u = adress(request.POST)
 
         if u.is_valid():
             att = User_attachments.objects.get(user=request.user)
@@ -52,6 +60,7 @@ def personal_info(request):
             att.save()
             return redirect("/profilepage")
 
+    # just context
     relation = Rating_Relation.objects.filter(rating_subject=request.user)
 
     chat_obj1 = chat.objects.filter(user_1=request.user)
@@ -67,12 +76,13 @@ def personal_info(request):
 
     return render(request, "profilepage/personal_info.html", context)
 
-
+# displays a offer creating form and your offers
 def offers(request):
     orders = Order.objects.filter(creator=request.user)
 
     att = User_attachments.objects.get(user=request.user)
 
+    # form for creating an offer
     form = None
     if request.method == "POST":
         u = MakeAnOrder(request.POST)
@@ -110,7 +120,7 @@ def offers(request):
     return render(request, "profilepage/user_offers.html", context)
 
 
-def test(request, offer_id):
+def offer(request, offer_id):
     # ! paypal
     host = request.get_host()
 
@@ -138,12 +148,6 @@ def test(request, offer_id):
     }
 
     return render(request, "profilepage/your_order_detail.html", context)
-
-
-def out(request):
-    logout(request)
-    return redirect("/")
-
 
 def refresh(request, offer_id):
     order = Order.objects.get(pk=offer_id)

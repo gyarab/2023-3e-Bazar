@@ -14,21 +14,26 @@ with open("config.json") as config_file:
 SECRET_KEY = config["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# TODO false az bude ready
 DEBUG = True
 
+# TODO: update this just to the domovprojekt.com and turn on the cloudflare tunnel
+# These are allowed hosts that can host our server
 ALLOWED_HOSTS = ["192.168.88.22", "domovprojekt.com"]
 
-
+# points to the media folder
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
-
+# points to where shuld be user redirected after login in/out
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+#! i aint even sure what in the hell that is
 SITE_ID = 4
 
+# installed apps in use
 INSTALLED_APPS = [
     # default
     "django.contrib.admin",
@@ -37,15 +42,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # apps
+    # all the created apps
     "homepage",
     "profilepage",
     "chat",
-    # others
+    # other apps
     "widget_tweaks",
     "ckeditor",
     "ckeditor_uploader",
-    # google stuff
+    # apps needed for google login
     "django.contrib.sites",
     "allauth",
     "allauth.account",
@@ -57,6 +62,7 @@ INSTALLED_APPS = [
     "paypal.standard.ipn",
 ]
 
+# allauth settings
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": ["profile", "email"],
@@ -65,6 +71,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+# middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -99,9 +106,9 @@ WSGI_APPLICATION = "Bazar.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "bazar_final",
-        "USER": "bazar_final",
-        "PASSWORD": "bazar",
+        "NAME": config["DATABASE_NAME"],
+        "USER": config["DATABASE_USER"],
+        "PASSWORD": config["DATABASE_USER_PASSWORD"],
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
@@ -122,24 +129,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# language in which the app is programed
 LANGUAGE_CODE = "en-us"
 
+# time zone
 TIME_ZONE = "CET"
 
 USE_I18N = True
 
 USE_TZ = True
 
+# points to the static folder
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# allauth settings
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+# ckeditor config part of settings
 CKEDITOR_CONFIGS = {
     "default": {
         "toolbar": "Custom",
@@ -165,11 +177,15 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+# path to where 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+# paypal settings
 PAYPAL_RECEIVER_EMAIL = config["PAYPAL_EMAIL"]
 PAYPAL_TEST = True
 
+# email backend settings
+# TODO still not working
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
@@ -177,4 +193,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
-CSRF_TRUSTED_ORIGINS = ["192.168.88.22", "https://domovprojekt.com"]
+# trusted origins of the CSRF token
+CSRF_TRUSTED_ORIGINS = ["http://192.168.88.22", "https://domovprojekt.com"]

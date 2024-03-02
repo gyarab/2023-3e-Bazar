@@ -1,7 +1,7 @@
 venv/
-Bazar.sock
+.vscode/
+config.json
 Pipfile
 Pipfile.lock
-config.json
 TODO
-.vscode
+Bazar.sock

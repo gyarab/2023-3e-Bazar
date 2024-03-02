@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.timezone import now
 from ckeditor_uploader.fields import RichTextUploadingField
 
-
+# category model
 class Category(models.Model):
     name = models.CharField(max_length=40)
 
@@ -13,7 +13,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
-
+# Order model 
 class Order(models.Model):
     Title = models.CharField(max_length=255)
     price = models.IntegerField()
@@ -22,6 +22,7 @@ class Order(models.Model):
     expired = models.BooleanField(default=False)
     creator = models.ForeignKey(User, related_name="Orders", on_delete=models.CASCADE)
     importance = models.IntegerField(default=0)
+    # every category has its orders
     category = models.ForeignKey(
         Category, related_name="Orders", on_delete=models.CASCADE
     )
@@ -32,7 +33,7 @@ class Order(models.Model):
     class Meta:
         verbose_name_plural = "Orders"
 
-
+# attachments to the user model
 class User_attachments(models.Model):
     rating = models.IntegerField(default=0)
     City = models.CharField(max_length=255, default="")
@@ -40,6 +41,7 @@ class User_attachments(models.Model):
     Postal_code = models.CharField(max_length=255, default="")
     phone_number = models.CharField(max_length=255, default="")
     theme = models.CharField(max_length=255, default="")
+    # every on of those has its user
     user = models.ForeignKey(
         User, related_name="User_attachments", on_delete=models.CASCADE
     )
@@ -50,14 +52,17 @@ class User_attachments(models.Model):
     class Meta:
         verbose_name_plural = "User_attachments"
 
-
+# is used so you can rate a user just one time
 class Rating_Relation(models.Model):
+    # rated user
     rating_subject = models.ForeignKey(
         User, related_name="Rating_Subjects", on_delete=models.CASCADE
     )
+    # user rating
     rating_creator = models.ForeignKey(
         User, related_name="Rating_Creators", on_delete=models.CASCADE
     )
+    # rating user comment
     comment = models.TextField(default="")
 
     def __str__(self):
@@ -65,22 +70,13 @@ class Rating_Relation(models.Model):
             self.rating_subject.username + " hodnotil " + self.rating_creator.username
         )
 
-
-class Feedback(models.Model):
-    sender = models.ForeignKey(User, related_name="Sender", on_delete=models.CASCADE)
-    message = models.TextField()
-    creation_date = models.DateTimeField(default=now)
-
-    class Meta:
-        verbose_name_plural = "Feedback"
-
-    def __str__(self):
-        return self.sender.username + " feedback"
-
-
+# chat model
 class chat(models.Model):
+    # 1 user of the conversation
     user_1 = models.ForeignKey(User, related_name="User_1", on_delete=models.CASCADE)
-    user_2 = models.ForeignKey(User, related_name="User_2", on_delete=models.CASCADE)
+    # 2 user of the conversation
+    user_2 = models.ForeignKey(User, related_name="User_2", on_delete=models.CASCADE) 
+    # the id of the order that the chat is about
     order_id = models.IntegerField(default=0)
 
     class Meta:
@@ -95,13 +91,17 @@ class chat(models.Model):
             + str(self.order_id)
         )
 
-
+# message model 
 class message(models.Model):
+    # chat that the message is in
     chat = models.ForeignKey(chat, related_name="Chat", on_delete=models.CASCADE)
+    # user that sent the message
     message_sender = models.ForeignKey(
         User, related_name="Message_Sender", on_delete=models.CASCADE
     )
+    # the actual text of the message
     message = models.TextField()
+    # date when the message was sent
     creation_date = models.DateTimeField(default=now)
 
     class Meta:

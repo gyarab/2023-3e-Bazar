@@ -8,10 +8,10 @@ from django.core.mail import send_mail
 from bs4 import BeautifulSoup
 
 from .forms import SignupForm, rate
-from .models import Category, Order, User_attachments, Rating_Relation, Feedback
+from .models import Category, Order, User_attachments, Rating_Relation
 
 
-# home
+# homepage method
 def index(request):
     # creates a user_att first time user logs in
     if (
@@ -49,17 +49,10 @@ def index(request):
         if orders.count() == 0:
             orders = "failed"
 
-    # message us
-    if "message" in request.POST:
-        u = Feedback()
-        u.sender = request.user
-        u.message = request.POST["message"]
-        u.save()
-        return redirect("/")
-
     # takes care of importance
     orders_imp = importance(orders)
 
+    # takes care of deciding if the directions filter should be displayed
     display_directions = "dont-display"
     if not request.user.is_anonymous:
         att = User_attachments.objects.get(user=request.user)
@@ -78,6 +71,7 @@ def index(request):
         "display_directions": display_directions,
     }
 
+    # rendering the home.html
     return render(request, "home.html", context)
 
 
@@ -120,6 +114,8 @@ def order(request, order_id):
             relation = True
     comments = Rating_Relation.objects.filter(rating_subject=order.creator)
     att = User_attachments.objects.get(user=order.creator)
+
+
     context = {
         "order": order,
         "form": u,
@@ -240,11 +236,13 @@ def useable(request):
                 if not range(int(distance), request.user, o):
                     order = order.exclude(pk=o.pk)
 
+    # figures out if the order is expired
     for o in order:
         k = Order.objects.get(pk=o.pk)
         if is_expired(k):
             order = order.exclude(pk=k.pk)
 
+    # if some exist return them, if not return failed
     if order.count() == 0:
         return "failed"
     else:
@@ -252,7 +250,6 @@ def useable(request):
 
 
 # checks if a offer is too old
-# TODO nic nedela - fixnout
 def is_expired(order):
     if order.creation_date.replace(tzinfo=None) < (datetime.now() - timedelta(days=30)):
         order.expired = True
@@ -261,7 +258,8 @@ def is_expired(order):
     else:
         return False
 
-
+# takes care of organazing offers so the ones that are paid to be propagaded
+# actually are
 def importance(orders):
     importance = []
 
@@ -307,7 +305,7 @@ def userRating(order_id, rating, comment, creator):
         return "success"
 
 
-# TODO dodelat - jsem linej jak svine
+# takes care of searching by distance
 def range(distance, user, order):
     att1 = User_attachments.objects.get(user=user)
     att2 = User_attachments.objects.get(user=order.creator)
@@ -350,7 +348,7 @@ def range(distance, user, order):
     else:
         return False
 
-
+# formates the address for the api
 def place_splitting(att):
     string = ""
     # city
@@ -377,6 +375,7 @@ def place_splitting(att):
 
 
 # Test method for generating test orders
+# TODO nakonci smazat
 def generate(request):
     Order.objects.all().delete()
     for i in range(100):
