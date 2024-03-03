@@ -99,7 +99,7 @@
         <div class="col-md-auto">
           <h3>Pokud potřebujete zviditelnit svuj inzerat:</h3>
           <p>Cena: 10 Eur</p>
-          {{ paypal.render }}
+          <a href="{% url 'paypal_redirect' offer_id %}"><button class="btn btn-dark">Buy now</button></a>
         </div>
       </div>
     </div>
