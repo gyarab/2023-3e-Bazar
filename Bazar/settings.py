@@ -177,7 +177,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-# path to where 
+# path to where
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # paypal settings
@@ -195,3 +195,6 @@ EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
 # trusted origins of the CSRF token
 CSRF_TRUSTED_ORIGINS = ["http://192.168.88.22", "https://domovprojekt.com"]
+
+# default paypal button
+PAYPAL_BUY_BUTTON_IMAGE = "/media/images/paypal.jpg"

@@ -92,7 +92,8 @@ def personal_info(request):
 def offers(request):
 
     # deletes all of request users uncompleted payments
-    payment.objects.get(user=request.user, completed=False).delete()
+    if payment.objects.filter(user=request.user, completed=False).exists():
+        p = payment.objects.filter(user=request.user, completed=False).delete()
 
     orders = Order.objects.filter(creator=request.user)
 
@@ -245,11 +246,12 @@ def payment_redirect(request, offer_id):
     }
 
     paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
-    return render(
-        request,
-        "profilepage/payment_confirmation.html",
-        {"paypal": paypal_payment},
-    )
+    att = User_attachments.objects.get(user=request.user)
+    context = {
+        "paypal": paypal_payment,
+        "att": att,
+    }
+    return render(request, "profilepage/payment_confirmation.html", context)
 
 
 # deletes the user and all of his attachments
