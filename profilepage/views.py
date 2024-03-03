@@ -1,7 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from .forms import MakeAnOrder, adress, edit_description
-from homepage.models import Order, User_attachments, Rating_Relation, chat, Category
+from homepage.models import (
+    Order,
+    User_attachments,
+    Rating_Relation,
+    chat,
+    Category,
+    payment,
+)
 from datetime import datetime
 from django.conf import settings
 import uuid
@@ -12,6 +19,7 @@ from django.core.exceptions import ValidationError
 
 # paypal
 from paypal.standard.forms import PayPalPaymentsForm
+
 
 # personal info page
 def personal_info(request):
@@ -79,13 +87,18 @@ def personal_info(request):
 
     return render(request, "profilepage/personal_info.html", context)
 
+
 # displays a offer creating form and your offers
 def offers(request):
+
+    # deletes all of request users uncompleted payments
+    payment.objects.get(user=request.user, completed=False).delete()
+
     orders = Order.objects.filter(creator=request.user)
 
     att = User_attachments.objects.get(user=request.user)
 
-    # form for creating an offer 
+    # form for creating an offer
     form = None
     if request.method == "POST" and att.offer_count <= 4:
         u = MakeAnOrder(request.POST)
@@ -93,12 +106,12 @@ def offers(request):
             o = Order.objects.create(
                 Title=u.cleaned_data["title"],
                 price=u.cleaned_data["price"],
-                description = u.cleaned_data["description"],
-                creation_date = datetime.now(),
-                expired = False,
-                creator = request.user,
-                importance = 0,
-                category = u.cleaned_data["category"],
+                description=u.cleaned_data["description"],
+                creation_date=datetime.now(),
+                expired=False,
+                creator=request.user,
+                importance=0,
+                category=u.cleaned_data["category"],
             )
             o.save()
             att.offer_count += 1
@@ -127,23 +140,9 @@ def offers(request):
     }
     return render(request, "profilepage/user_offers.html", context)
 
+
 # displays the offer editing page
 def offer(request, offer_id):
-    # ! paypal
-    host = request.get_host()
-
-    # paypal checkout info
-    paypal_checkout = {
-        "business": settings.PAYPAL_RECEIVER_EMAIL,
-        "amount": "10",
-        "item_name": "zvyrazneni inzeratu",
-        "invoice": uuid.uuid4(),
-        "currency_code": "USD",
-        "notify_url": f"https://{host}{reverse('paypal-ipn')}",
-        "return_url": f"http://{host}{reverse('confirmed', kwargs = {'offer_id': offer_id})}",
-        "cancel_url": f"http://{host}{reverse('canceled', kwargs = {'offer_id': offer_id})}",
-    }
-    paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
 
     # checks if your offer is expired and so if the renew button should be displayed
     expired = False
@@ -166,7 +165,7 @@ def offer(request, offer_id):
             cat = Category.objects.get(pk=request.POST.get("category"))
             offer.category = cat
             offer.save()
-    
+
     # used to edit user offer description
     if request.method == "POST":
         u = edit_description(request.POST)
@@ -175,7 +174,7 @@ def offer(request, offer_id):
             offer.description = u.cleaned_data["description"]
             offer.save()
             return redirect(f"/profilepage/offer/{offer_id}")
-        
+
     # context
     description_edit_form = edit_description()
 
@@ -183,7 +182,6 @@ def offer(request, offer_id):
     # TODO escription_edit_form.description.data = offer.description
     att = User_attachments.objects.get(user=request.user)
     context = {
-        "paypal": paypal_payment,
         "expired": expired,
         "offer_id": offer_id,
         "offer": offer,
@@ -194,7 +192,8 @@ def offer(request, offer_id):
 
     return render(request, "profilepage/your_order_detail.html", context)
 
-# refreshes your offer 
+
+# refreshes your offer
 def refresh(request, offer_id):
     order = Order.objects.get(pk=offer_id)
 
@@ -204,26 +203,64 @@ def refresh(request, offer_id):
 
     return redirect("/profilepage/offers/")
 
-# if it is called adds to the importance to users offer
-def confirmed(request, offer_id):
-    order = Order.objects.get(pk=offer_id)
 
-    order.importance += 3
-    order.save()
+# if it is called adds to the importance to users offer
+def confirmed(request, payment_id):
+    p = payment.objects.get(cid=payment_id)
+    o = p.order
+
+    if payment.objects.filter(cid=payment_id).exists():
+        p.completed = True
+        p.save()
+        o.importance += 3
+        o.save()
 
     return render(request, "profilepage/payment_confirmed.html")
+
 
 # is called when the paypal payment didnt go through
 def cancel(request, offer_id):
     return render(request, "profilepage/payment_canceled.html")
 
-# deletes the user and all of his attachments   
+
+def payment_redirect(request, offer_id):
+    id = uuid.uuid4()
+    payment.objects.create(
+        user=request.user,
+        order=Order.objects.get(pk=offer_id),
+        cid=id,
+    )
+    # ! paypal
+    host = request.get_host()
+    # paypal checkout info
+    paypal_checkout = {
+        "business": settings.PAYPAL_RECEIVER_EMAIL,
+        "amount": "10",
+        "item_name": "zvyrazneni inzeratu",
+        "invoice": uuid.uuid4(),
+        "currency_code": "USD",
+        "notify_url": f"https://{host}{reverse('paypal-ipn')}",
+        "return_url": f"http://{host}{reverse('confirmed', kwargs = {'payment_id': id})}",
+        "cancel_url": f"http://{host}{reverse('canceled', kwargs = {'payment_id': id})}",
+    }
+
+    paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
+    return render(
+        request,
+        "profilepage/payment_confirmation.html",
+        {"paypal": paypal_payment},
+    )
+
+
+# deletes the user and all of his attachments
 def delete(request):
     if request.user.is_authenticated:
         User_attachments.objects.get(user=request.user).delete()
         request.user.delete()
         logout(request)
+
     return redirect("/")
+
 
 # takes care of deleting offers
 def delete_offer(request, offer_id):

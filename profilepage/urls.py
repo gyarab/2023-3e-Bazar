@@ -15,9 +15,15 @@ urlpatterns = [
     path("offer/<int:offer_id>/", views.offer, name="offer"),
     # paypal
     # path to the html that confirms your payment
-    path("confirmed/<int:offer_id>/", views.confirmed, name="confirmed"),
+    path("confirmed/<str:payment_id>", views.confirmed, name="confirmed"),
     # path to the html that tells you that your payment failed
-    path("canceled/<int:offer_id>/", views.cancel, name="canceled"),
+    path("canceled/<str:payment_id>/", views.cancel, name="canceled"),
     # delete offer path
     path("delete/<int:offer_id>/", views.delete_offer, name="delete_offer"),
+    # for redirecting to payment
+    path(
+        "payment_redirect/<int:offer_id>",
+        views.payment_redirect,
+        name="paypal_redirect",
+    ),
 ]
