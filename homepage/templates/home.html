@@ -129,13 +129,20 @@
                     {% if color %}
                     {% if color == 'white' %}
                     <div class="box" style="background-color: #212529;">
-                        {{ offer.Title }}
+                        <p>{{ offer.Title }}</p>
+                        <img src="{{ offer.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
                     </div>
                     {% else %}
-                    <div class="box" style="background-color: #F8F9FA; color: #212529;">{{ offer.Title }}</div>
+                    <div class="box" style="background-color: #F8F9FA; color: #212529;">
+                        <p>{{ offer.Title }}</p>
+                        <img src="{{ offer.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
+                    </div>
                     {% endif %}
                     {% else %}
-                    <div class="box" style="background-color: #212529; color:white;">{{ offer.Title }}</div>
+                    <div class="box" style="background-color: #212529; color:white;">
+                        <p>{{ offer.Title }}</p>
+                        <img src="{{ offer.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
+                    </div>
                     {% endif %}
                 </a>
             </div>

@@ -5,7 +5,6 @@ import requests
 import geopy.distance
 from requests.structures import CaseInsensitiveDict
 from django.core.mail import send_mail
-from bs4 import BeautifulSoup
 
 from .forms import SignupForm, rate
 from .models import Category, Offer, User_attachments, Rating_Relation

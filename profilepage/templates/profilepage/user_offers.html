@@ -46,8 +46,7 @@
 
    <div class="container-fluid">
       <div class="row">
-         <div class="col-md-6">
-               
+         <div class="col-md-6">        
             {% for orders in orders %}
             {% if att.theme == 'black' %}
             <div class="offer_box" style="background-color: white;">
@@ -55,6 +54,9 @@
             <div class="offer_box">
             {% endif %}
                <a href="{% url 'edit_offer' orders.id %}" class="color: white" style="text-decoration: none;">{{ orders.Title }}</a>
+               <br>
+               <br>
+               <img src="{{ orders.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
             </div>
                {% endfor %}
          </div>

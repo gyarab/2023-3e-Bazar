@@ -24,6 +24,7 @@ class Offer(models.Model):
     expired = models.BooleanField(default=False)
     creator = models.ForeignKey(User, related_name="Offers", on_delete=models.CASCADE)
     importance = models.IntegerField(default=0)
+    preview = models.CharField(max_length=255, default="")
     # every category has its Offers
     category = models.ForeignKey(
         Category, related_name="Offers", on_delete=models.CASCADE

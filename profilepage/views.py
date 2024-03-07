@@ -13,6 +13,7 @@ from datetime import datetime
 from django.conf import settings
 import uuid
 from django.urls import reverse
+from bs4 import BeautifulSoup
 
 # TODO remove
 from django.core.exceptions import ValidationError
@@ -113,6 +114,7 @@ def offers(request):
                 creator=request.user,
                 importance=0,
                 category=u.cleaned_data["category"],
+                preview=getImage(u.cleaned_data["description"]),
             )
             o.save()
             att.offer_count += 1
@@ -271,6 +273,16 @@ def delete_offer(request, offer_id):
     att.offer_count -= 1
     att.save()
     return redirect("/profilepage/offers/")
+
+
+# used to get the first image of the description
+def getImage(html):
+    soup = BeautifulSoup(html, "html.parser")
+    img = soup.find("img")
+    if img is None:
+        return "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
+    else:
+        return img["src"]
 
     # ! important you can use this
     # ? important you can use this
