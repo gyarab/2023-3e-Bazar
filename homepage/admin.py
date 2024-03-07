@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Category,
-    Order,
+    Offer,
     User_attachments,
     Rating_Relation,
     chat,
@@ -11,7 +11,7 @@ from .models import (
 )
 
 admin.site.register(Category)
-admin.site.register(Order)
+admin.site.register(Offer)
 admin.site.register(User_attachments)
 admin.site.register(Rating_Relation)
 admin.site.register(chat)

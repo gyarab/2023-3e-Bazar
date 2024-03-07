@@ -123,19 +123,19 @@
             <h1>Žádné inzeráty</h1>
         </div>
         {% else %}
-        {% for order in order %}
+        {% for offer in order %}
             <div class="col-12 col-sm-6" >
-                <a href="{% url 'order' order.id %}" style="text-decoration: none">
+                <a href="{% url 'offer' offer.id %}" style="text-decoration: none">
                     {% if color %}
                     {% if color == 'white' %}
                     <div class="box" style="background-color: #212529;">
-                        {{ order.Title }}
+                        {{ offer.Title }}
                     </div>
                     {% else %}
-                    <div class="box" style="background-color: #F8F9FA; color: #212529;">{{ order.Title }}</div>
+                    <div class="box" style="background-color: #F8F9FA; color: #212529;">{{ offer.Title }}</div>
                     {% endif %}
                     {% else %}
-                    <div class="box" style="background-color: #212529; color:white;">{{ order.Title }}</div>
+                    <div class="box" style="background-color: #212529; color:white;">{{ offer.Title }}</div>
                     {% endif %}
                 </a>
             </div>

@@ -54,7 +54,7 @@
             {% else %}
             <div class="offer_box">
             {% endif %}
-               <a href="{% url 'offer' orders.id %}" class="color: white" style="text-decoration: none;">{{ orders.Title }}</a>
+               <a href="{% url 'edit_offer' orders.id %}" class="color: white" style="text-decoration: none;">{{ orders.Title }}</a>
             </div>
                {% endfor %}
          </div>

@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.timezone import now
 from ckeditor_uploader.fields import RichTextUploadingField
 
+
 # category model
 class Category(models.Model):
     name = models.CharField(max_length=40)
@@ -13,25 +14,27 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
-# Order model 
-class Order(models.Model):
+
+# Offer model
+class Offer(models.Model):
     Title = models.CharField(max_length=255)
     price = models.IntegerField()
     description = RichTextUploadingField(blank=True, null=True)
     creation_date = models.DateTimeField(default=now)
     expired = models.BooleanField(default=False)
-    creator = models.ForeignKey(User, related_name="Orders", on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, related_name="Offers", on_delete=models.CASCADE)
     importance = models.IntegerField(default=0)
-    # every category has its orders
+    # every category has its Offers
     category = models.ForeignKey(
-        Category, related_name="Orders", on_delete=models.CASCADE
+        Category, related_name="Offers", on_delete=models.CASCADE
     )
 
     def __str__(self):
         return self.Title
 
     class Meta:
-        verbose_name_plural = "Orders"
+        verbose_name_plural = "Offers"
+
 
 # attachments to the user model
 class User_attachments(models.Model):
@@ -53,6 +56,7 @@ class User_attachments(models.Model):
     class Meta:
         verbose_name_plural = "User_attachments"
 
+
 # is used so you can rate a user just one time
 class Rating_Relation(models.Model):
     # rated user
@@ -71,14 +75,15 @@ class Rating_Relation(models.Model):
             self.rating_subject.username + " hodnotil " + self.rating_creator.username
         )
 
+
 # chat model
 class chat(models.Model):
     # 1 user of the conversation
     user_1 = models.ForeignKey(User, related_name="User_1", on_delete=models.CASCADE)
     # 2 user of the conversation
-    user_2 = models.ForeignKey(User, related_name="User_2", on_delete=models.CASCADE) 
-    # the id of the order that the chat is about
-    order_id = models.IntegerField(default=0)
+    user_2 = models.ForeignKey(User, related_name="User_2", on_delete=models.CASCADE)
+    # the id of the offer that the chat is about
+    offer_id = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "Chats"
@@ -89,10 +94,11 @@ class chat(models.Model):
             + " chat with "
             + self.user_2.username
             + " about "
-            + str(self.order_id)
+            + str(self.offer_id)
         )
 
-# message model 
+
+# message model
 class message(models.Model):
     # chat that the message is in
     chat = models.ForeignKey(chat, related_name="Chat", on_delete=models.CASCADE)
@@ -111,13 +117,14 @@ class message(models.Model):
     def __str__(self):
         return self.message_sender.username + " message"
 
+
 # paypal payments
 # used for validating payments
 class payment(models.Model):
     # the user that made the payment
     user = models.ForeignKey(User, related_name="User", on_delete=models.CASCADE)
-    # the order that the payment is for
-    order = models.ForeignKey(Order, related_name="Order", on_delete=models.CASCADE)
+    # the offer that the payment is for
+    order = models.ForeignKey(Offer, related_name="Offer", on_delete=models.CASCADE)
     # the date of the payment
     creation_date = models.DateTimeField(default=now)
     # unique payment id

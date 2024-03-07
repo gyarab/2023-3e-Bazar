@@ -12,7 +12,7 @@ urlpatterns = [
     # it is displayed again
     path("refresh/<int:offer_id>", views.refresh, name="refresh"),
     # used for displaying the offer editing page
-    path("offer/<int:offer_id>/", views.offer, name="offer"),
+    path("edit_offer/<int:offer_id>/", views.offer, name="edit_offer"),
     # paypal
     # path to the html that confirms your payment
     path("confirmed/<str:payment_id>", views.confirmed, name="confirmed"),

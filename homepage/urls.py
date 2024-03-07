@@ -7,8 +7,8 @@ from .forms import LoginForm
 urlpatterns = [
     # path to the homepage
     path("", views.index, name="home"),
-    # path to the order page
-    path("order/<int:order_id>/", views.order, name="order"),
+    # path to the offer page
+    path("offer/<int:offer_id>/", views.offer, name="offer"),
     # path to the signup page
     path("signup/", views.signup, name="signup"),
     # path to the login page

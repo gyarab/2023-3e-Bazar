@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
-from .forms import MakeAnOrder, adress, edit_description
+from .forms import MakeAnOffer, adress, edit_description
 from homepage.models import (
-    Order,
+    Offer,
     User_attachments,
     Rating_Relation,
     chat,
@@ -95,16 +95,16 @@ def offers(request):
     if payment.objects.filter(user=request.user, completed=False).exists():
         p = payment.objects.filter(user=request.user, completed=False).delete()
 
-    orders = Order.objects.filter(creator=request.user)
+    offers = Offer.objects.filter(creator=request.user)
 
     att = User_attachments.objects.get(user=request.user)
 
     # form for creating an offer
     form = None
     if request.method == "POST" and att.offer_count <= 4:
-        u = MakeAnOrder(request.POST)
+        u = MakeAnOffer(request.POST)
         if u.is_valid():
-            o = Order.objects.create(
+            o = Offer.objects.create(
                 Title=u.cleaned_data["title"],
                 price=u.cleaned_data["price"],
                 description=u.cleaned_data["description"],
@@ -119,7 +119,7 @@ def offers(request):
             att.save()
             return redirect("/profilepage/offers/")
 
-    form = MakeAnOrder()
+    form = MakeAnOffer()
 
     # used for checking if the user has added an adress
     # and if not, the form for adding an offer will not be displayed
@@ -136,7 +136,7 @@ def offers(request):
     context = {
         "form": form,
         "att": att,
-        "orders": orders,
+        "orders": offers,
         "show": show_form,
     }
     return render(request, "profilepage/user_offers.html", context)
@@ -147,11 +147,11 @@ def offer(request, offer_id):
 
     # checks if your offer is expired and so if the renew button should be displayed
     expired = False
-    if Order.objects.filter(pk=offer_id).filter(expired=True).exists():
+    if Offer.objects.filter(pk=offer_id).filter(expired=True).exists():
         expired = True
 
     # used to edit users offers
-    offer = Order.objects.get(pk=offer_id)
+    offer = Offer.objects.get(pk=offer_id)
     if request.method == "POST":
         # title
         if request.POST.get("title"):
@@ -196,11 +196,11 @@ def offer(request, offer_id):
 
 # refreshes your offer
 def refresh(request, offer_id):
-    order = Order.objects.get(pk=offer_id)
+    offer = Offer.objects.get(pk=offer_id)
 
-    order.creation_date = datetime.now()
-    order.expired = False
-    order.save()
+    offer.creation_date = datetime.now()
+    offer.expired = False
+    offer.save()
 
     return redirect("/profilepage/offers/")
 
@@ -208,7 +208,7 @@ def refresh(request, offer_id):
 # if it is called adds to the importance to users offer
 def confirmed(request, payment_id):
     p = payment.objects.get(cid=payment_id)
-    o = p.order
+    o = p.offer
 
     if payment.objects.filter(cid=payment_id).exists():
         p.completed = True
@@ -228,7 +228,7 @@ def payment_redirect(request, offer_id):
     id = uuid.uuid4()
     payment.objects.create(
         user=request.user,
-        order=Order.objects.get(pk=offer_id),
+        offer=Offer.objects.get(pk=offer_id),
         cid=id,
     )
     # ! paypal
@@ -266,7 +266,7 @@ def delete(request):
 
 # takes care of deleting offers
 def delete_offer(request, offer_id):
-    Order.objects.get(pk=offer_id).delete()
+    Offer.objects.get(pk=offer_id).delete()
     att = User_attachments.objects.get(user=request.user)
     att.offer_count -= 1
     att.save()

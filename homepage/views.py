@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from bs4 import BeautifulSoup
 
 from .forms import SignupForm, rate
-from .models import Category, Order, User_attachments, Rating_Relation
+from .models import Category, Offer, User_attachments, Rating_Relation
 
 
 # homepage method
@@ -36,21 +36,21 @@ def index(request):
     if "filter" in request.POST:
         temp = useable(request)
         if not temp == "failed":
-            orders = temp
+            offers = temp
         else:
-            orders = "failed"
+            offers = "failed"
     else:
-        orders = useable(request)
+        offers = useable(request)
 
     # simple search
     if "search" in request.POST:
-        orders = Order.objects.filter(Title__contains=request.POST["searched_text"])
+        offers = Offer.objects.filter(Title__contains=request.POST["searched_text"])
 
-        if orders.count() == 0:
-            orders = "failed"
+        if offers.count() == 0:
+            offers = "failed"
 
     # takes care of importance
-    orders_imp = importance(orders)
+    offers_imp = importance(offers)
 
     # takes care of deciding if the directions filter should be displayed
     display_directions = "dont-display"
@@ -66,7 +66,7 @@ def index(request):
     category = Category.objects.all()
     context = {
         "category": category,
-        "order": orders_imp,
+        "order": offers_imp,
         "color": color,
         "display_directions": display_directions,
     }
@@ -75,8 +75,8 @@ def index(request):
     return render(request, "home.html", context)
 
 
-def order(request, order_id):
-    order = get_object_or_404(Order, pk=order_id)
+def offer(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
 
     # takes care of switching between dark and light mode
     color = ""
@@ -95,7 +95,7 @@ def order(request, order_id):
 
         if u.is_valid():
             rated = userRating(
-                order_id,
+                offer_id,
                 u.cleaned_data["rating"],
                 u.cleaned_data["comment"],
                 request.user,
@@ -107,17 +107,16 @@ def order(request, order_id):
     relation = False
     if request.user.is_anonymous == False:
         if (
-            Rating_Relation.objects.filter(rating_subject=order.creator)
+            Rating_Relation.objects.filter(rating_subject=offer.creator)
             .filter(rating_creator=request.user)
             .exists()
         ):
             relation = True
-    comments = Rating_Relation.objects.filter(rating_subject=order.creator)
-    att = User_attachments.objects.get(user=order.creator)
-
+    comments = Rating_Relation.objects.filter(rating_subject=offer.creator)
+    att = User_attachments.objects.get(user=offer.creator)
 
     context = {
-        "order": order,
+        "order": offer,
         "form": u,
         "color": color,
         "rated": rated,
@@ -181,104 +180,103 @@ def theme(request):
 
 # sorts the methods that should be displayed
 def useable(request):
-    order = Order.objects.filter(expired=False)
+    offer = Offer.objects.filter(expired=False)
 
     # category
     if "category" in request.POST:
         category_id = request.POST["category"]
         if not category_id == "none":
             c = get_object_or_404(Category, pk=category_id)
-            for o in order:
+            for o in offer:
                 if not o.category == c:
-                    order = order.exclude(pk=o.pk)
+                    offer = offer.exclude(pk=o.pk)
     # keyword
     if "keyword" in request.POST:
         keyword = request.POST["keyword"]
         if not keyword == "":
-            for o in order:
+            for o in offer:
                 if not o.Title.__contains__(keyword):
-                    order = order.exclude(pk=o.pk)
+                    offer = offer.exclude(pk=o.pk)
     # price
     if "any-price" in request.POST:
         pass
     elif "0-1000-price" in request.POST:
-        for o in order:
+        for o in offer:
             if not o.price <= 1000:
-                order = order.exclude(pk=o.pk)
+                offer = offer.exclude(pk=o.pk)
     elif "1001-2500-price" in request.POST:
-        for o in order:
+        for o in offer:
             if not o.price > 1000 or not o.price <= 2500:
-                order = order.exclude(pk=o.pk)
+                offer = offer.exclude(pk=o.pk)
     elif "2501-5000-price" in request.POST:
-        for o in order:
+        for o in offer:
             if not o.price > 2500 or not o.price <= 5000:
-                order = order.exclude(pk=o.pk)
+                offer = offer.exclude(pk=o.pk)
     elif "5001-10000-price" in request.POST:
-        for o in order:
+        for o in offer:
             if not o.price > 5000 or not o.price <= 10000:
-                order = order.exclude(pk=o.pk)
+                offer = offer.exclude(pk=o.pk)
     elif "10000-more-price" in request.POST:
-        for o in order:
+        for o in offer:
             if not o.price > 10000:
-                order = order.exclude(pk=o.pk)
+                offer = offer.exclude(pk=o.pk)
     elif "min-price" in request.POST and "max-price" in request.POST:
         max = request.POST["max-price"]
         min = request.POST["min-price"]
         if not max == "" and not min == "":
-            for o in order:
+            for o in offer:
                 if not o.price < int(max) or not o.price > int(min):
-                    order = order.exclude(pk=o.pk)
+                    offer = offer.exclude(pk=o.pk)
     # distance
     if "distance" in request.POST:
         distance = request.POST["distance"]
         if not distance == "":
-            for o in order:
+            for o in offer:
                 if not range(int(distance), request.user, o):
-                    order = order.exclude(pk=o.pk)
+                    offer = offer.exclude(pk=o.pk)
 
     # figures out if the order is expired
-    for o in order:
-        k = Order.objects.get(pk=o.pk)
+    for o in offer:
+        k = Offer.objects.get(pk=o.pk)
         if is_expired(k):
-            order = order.exclude(pk=k.pk)
+            offer = offer.exclude(pk=k.pk)
 
     # if some exist return them, if not return failed
-    if order.count() == 0:
+    if offer.count() == 0:
         return "failed"
     else:
-        return order
+        return offer
 
 
 # checks if a offer is too old
-def is_expired(order):
-    if order.creation_date.replace(tzinfo=None) < (datetime.now() - timedelta(days=30)):
-        order.expired = True
-        order.save()
+def is_expired(offer):
+    if offer.creation_date.replace(tzinfo=None) < (datetime.now() - timedelta(days=30)):
+        offer.expired = True
+        offer.save()
         return True
     else:
         return False
 
+
 # takes care of organazing offers so the ones that are paid to be propagaded
 # actually are
-def importance(orders):
+def importance(offers):
     importance = []
 
-    if orders != "failed":
-        for order in orders:
+    if offers != "failed":
+        for order in offers:
             if order.importance > 0:
                 importance.append(order)
-                orders = orders.exclude(pk=order.pk)
+                offers = offers.exclude(pk=order.pk)
 
-    v = sorted(
-        importance, key=lambda x: x.importance, reverse=True
-    )  # TODO figure out wtf is this
+    v = sorted(importance, key=lambda x: x.importance, reverse=True)
 
-    return v + list(orders)
+    return v + list(offers)
 
 
 # Takes care of calculating user rating
 def userRating(order_id, rating, comment, creator):
-    o = Order.objects.get(pk=order_id)
+    o = Offer.objects.get(pk=order_id)
     subject = o.creator
 
     relations = Rating_Relation.objects.filter(rating_subject=subject).filter(
@@ -348,6 +346,7 @@ def range(distance, user, order):
     else:
         return False
 
+
 # formates the address for the api
 def place_splitting(att):
     string = ""
@@ -374,12 +373,12 @@ def place_splitting(att):
     return string
 
 
-# Test method for generating test orders
+# Test method for generating test offers
 # TODO nakonci smazat
 def generate(request):
-    Order.objects.all().delete()
+    Offer.objects.all().delete()
     for i in range(100):
-        o = Order()
+        o = Offer()
         o.Title = "Test" + str(i)
         o.mail = "test" + str(i) + "@test.com"
         o.price = i
