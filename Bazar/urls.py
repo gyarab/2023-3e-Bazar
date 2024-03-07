@@ -43,4 +43,5 @@ urlpatterns = [
     path("ckeditor/", include("ckeditor_uploader.urls")),
     # paypal
     path("paypal/", include("paypal.standard.ipn.urls")),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # this is for the media files

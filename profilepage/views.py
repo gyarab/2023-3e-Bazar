@@ -174,7 +174,7 @@ def offer(request, offer_id):
         if u.is_valid():
             offer.description = u.cleaned_data["description"]
             offer.save()
-            return redirect(f"/profilepage/offer/{offer_id}")
+            return redirect(f"/profilepage/edit_offer/{offer_id}/")
 
     # context
     description_edit_form = edit_description()
@@ -208,7 +208,7 @@ def refresh(request, offer_id):
 # if it is called adds to the importance to users offer
 def confirmed(request, payment_id):
     p = payment.objects.get(cid=payment_id)
-    o = p.offer
+    o = p.order
 
     if payment.objects.filter(cid=payment_id).exists():
         p.completed = True
@@ -228,7 +228,7 @@ def payment_redirect(request, offer_id):
     id = uuid.uuid4()
     payment.objects.create(
         user=request.user,
-        offer=Offer.objects.get(pk=offer_id),
+        order=Offer.objects.get(pk=offer_id),
         cid=id,
     )
     # ! paypal

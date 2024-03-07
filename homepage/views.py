@@ -269,9 +269,10 @@ def importance(offers):
                 importance.append(order)
                 offers = offers.exclude(pk=order.pk)
 
-    v = sorted(importance, key=lambda x: x.importance, reverse=True)
-
-    return v + list(offers)
+        v = sorted(importance, key=lambda x: x.importance, reverse=True)
+        return v + list(offers)
+    else:
+        return "failed"
 
 
 # Takes care of calculating user rating

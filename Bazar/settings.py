@@ -154,6 +154,7 @@ AUTHENTICATION_BACKENDS = (
 # ckeditor config part of settings
 CKEDITOR_CONFIGS = {
     "default": {
+        "skin":"n1theme",
         "toolbar": "Custom",
         "toolbar_Custom": [
             ["Styles", "Format", "Font", "FontSize"],
@@ -173,7 +174,8 @@ CKEDITOR_CONFIGS = {
             ["Cut", "Copy", "Paste", "PasteText"],
             ["Image"],
         ],
-        "removeDialogTabs": "image:advanced;image:Link;image:info",
+        "extraPlugins": "image2",
+        "filebrowserBrowseUrl": "",
     }
 }
 
