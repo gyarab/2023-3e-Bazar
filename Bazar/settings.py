@@ -154,7 +154,7 @@ AUTHENTICATION_BACKENDS = (
 # ckeditor config part of settings
 CKEDITOR_CONFIGS = {
     "default": {
-        "skin":"n1theme",
+        "skin": "n1theme",
         "toolbar": "Custom",
         "toolbar_Custom": [
             ["Styles", "Format", "Font", "FontSize"],
@@ -189,14 +189,13 @@ PAYPAL_TEST = True
 # email backend settings
 # TODO still not working
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = '192.168.88.22'
+EMAIL_PORT = 1025
 EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
 # trusted origins of the CSRF token
-CSRF_TRUSTED_ORIGINS = ["http://192.168.88.22", "https://domovprojekt.com"]
+CSRF_TRUSTED_ORIGINS = ["192.168.88.22", "domovprojekt.com"]
 
 # default paypal button
 PAYPAL_BUY_BUTTON_IMAGE = "/media/images/paypal.jpg"
