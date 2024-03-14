@@ -157,7 +157,7 @@ CKEDITOR_CONFIGS = {
         "skin": "n1theme",
         "toolbar": "Custom",
         "toolbar_Custom": [
-            ["Styles", "Format", "Font", "FontSize"],
+            ["Format", "Font", "FontSize"],
             ["Bold", "Italic", "Underline"],
             [
                 "NumberedList",
