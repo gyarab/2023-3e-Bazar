@@ -7,11 +7,22 @@ import datetime
 
 
 # displays the chat with all of its messages
-def Chat(request, offer_id):
+def Chat(request, offer_id, user_id):
     # finds or cretes the correct chat
     order = Offer.objects.get(id=offer_id)
-    if chat.objects.filter(offer_id=offer_id).exists():
-        chat_obj = chat.objects.get(offer_id=offer_id)
+    user_2 = User.objects.get(id=user_id)
+    if chat.objects.filter(
+        offer_id=offer_id, user_1=request.user, user_2=user_2
+    ).exists():
+        chat_obj = chat.objects.get(
+            offer_id=offer_id, user_1=request.user, user_2=user_2
+        )
+    elif chat.objects.filter(
+        offer_id=offer_id, user_2=request.user, user_1=user_2
+    ).exists():
+        chat_obj = chat.objects.get(
+            offer_id=offer_id, user_2=request.user, user_1=user_2
+        )
     else:
         chat_obj = chat.objects.create(
             user_1=request.user, user_2=order.creator, offer_id=offer_id

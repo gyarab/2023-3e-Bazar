@@ -271,6 +271,8 @@ def delete_offer(request, offer_id):
     Offer.objects.get(pk=offer_id).delete()
     att = User_attachments.objects.get(user=request.user)
     att.offer_count -= 1
+    if chat.objects.filter(offer_id=offer_id).exists():
+        chat.objects.get(offer_id=offer_id).delete()
     att.save()
     return redirect("/profilepage/offers/")
 
@@ -283,8 +285,3 @@ def getImage(html):
         return "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
     else:
         return img["src"]
-
-    # ! important you can use this
-    # ? important you can use this
-    # hello
-    # TODO todo

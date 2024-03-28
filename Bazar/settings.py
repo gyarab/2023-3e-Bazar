@@ -189,7 +189,7 @@ PAYPAL_TEST = True
 # email backend settings
 # TODO still not working
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = '192.168.88.22'
+EMAIL_HOST = "192.168.88.22"
 EMAIL_PORT = 1025
 EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]

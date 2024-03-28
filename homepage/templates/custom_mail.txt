@@ -1,0 +1,16 @@
+{% autoescape off %}
+Dobrý den {{ user.first_name }},
+
+dostali jsme vaši žádost na změnění hesla pro váš účet. Pro pokračování ve změně hesla
+
+otevřete: {{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}.
+
+Pokud jste si zprávu nevyžádali kontaktujte náš support team.
+
+Vaše uživatelské jméno je: {{ user.username }}.
+
+Šťastné nakupování,
+
+Tým Bazaroos
+
+{% endautoescape %} 

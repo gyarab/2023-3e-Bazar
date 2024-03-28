@@ -4,10 +4,21 @@ from datetime import datetime, timedelta
 import requests
 import geopy.distance
 from requests.structures import CaseInsensitiveDict
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from .forms import SignupForm, rate
 from .models import Category, Offer, User_attachments, Rating_Relation
+
+# Test
+import json
 
 
 # homepage method
@@ -124,6 +135,52 @@ def offer(request, offer_id):
         "att": att,
     }
     return render(request, "order.html", context)
+
+
+# is here so a custom mail can be sent
+def reset_password_custom(request):
+    with open("config.json") as config_file:
+        config = json.load(config_file)
+
+    if request.method == "POST":
+        password_form = PasswordResetForm(request.POST)
+        if password_form.is_valid():
+            data = password_form.cleaned_data.get("email")
+            user_email = User.objects.filter(Q(email=data))
+            if user_email.exists():
+                for user in user_email:
+                    subject = "Změna hesla"
+                    email_template_name = "custom_mail.txt"
+                    parameters = {
+                        "email": user.email,
+                        # ! Change before deployment
+                        "domain": "192.168.88.22",
+                        "site_name": "Bazaroos",
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "protocol": "http",
+                        "token": default_token_generator.make_token(user),
+                        # ! Change before deployment
+                        "protocol": "http",
+                        "user": user,
+                    }
+                    email = render_to_string(email_template_name, parameters)
+                    try:
+                        send_mail(
+                            subject,
+                            email,
+                            config["EMAIL_HOST_USER"],
+                            [user.email],
+                            fail_silently=False,
+                        )
+                    except:
+                        return HttpResponse("Invalid header found.")
+                return redirect("/reset_password_sent/")
+    else:
+        password_form = PasswordResetForm()
+    context = {
+        "form": password_form,
+    }
+    return render(request, "reset_password.html", context)
 
 
 # takes care of creating accounts
