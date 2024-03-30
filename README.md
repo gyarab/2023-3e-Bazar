@@ -1,0 +1,3 @@
+# Bazaroos
+
+Internetový bazar
