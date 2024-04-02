@@ -54,4 +54,4 @@ Pokud nechcete stránku testovat na svém počítač ale pouze ji navštívit je
 
 ![Django Logo](https://example.com/django-logo.png)
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo" height="128" width="110">
