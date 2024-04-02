@@ -16,6 +16,8 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 ## Technologický Stack
 
 - Django
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Django_logo.svg" alt="django logo" height="74" width="213">
+
 - Bootstrap
 - HTML
 - CSS
