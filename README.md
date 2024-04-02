@@ -8,15 +8,15 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 
 ## Funkce
 
-🔍Prohlížení dostupných produktů
+🔍 Prohlížení dostupných produktů
 
-🚀Filtrování a vyhledávání produktů
+🚀 Filtrování a vyhledávání produktů
 
-👤Vytváření a správa uživatelských profilů
+👤 Vytváření a správa uživatelských profilů
 
-📂Vytváření a správa inzerátů
+📂 Vytváření a správa inzerátů
 
-💬Spojení se s prodejcem pomocí chatu
+💬 Spojení se s prodejcem pomocí chatu
 
 ## Technologický Stack
 
