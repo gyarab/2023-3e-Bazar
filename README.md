@@ -34,9 +34,9 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 1. Klonujte tento repozitář na své lokální zařízení.
 2. Vytvořte virtuální prostředí.
 3. Nainstalujte závislosti pomocí příkazu `pip install -r requirements.txt`.
-4. Spusťte lokální server pomocí příkazu `python manage.py runserver`.
-5. Otevřete webový prohlížeč a přejděte na adresu `http://localhost:8000`.
-6. Je potřeba ještě zařídit databázi a soubor config.json (obsahují citlivé údaje)
+4. Je potřeba ještě zařídit databázi a soubor config.json (obsahují citlivé údaje)
+5. Spusťte lokální server pomocí příkazu `python manage.py runserver`.
+6. Otevřete webový prohlížeč a přejděte na adresu `http://localhost:8000`.
 
 ## Použití
 
