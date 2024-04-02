@@ -50,10 +50,6 @@ Pokud nechcete stránku testovat na svém počítač ale pouze ji navštívit je
 
 ---
 
-![Bazaroos Logo](https://example.com/bazaroos-logo.png)
-
-![Django Logo](https://example.com/django-logo.png)
-
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Django_logo.svg" alt="django logo" height="74" width="213">
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo" height="128" width="110">
