@@ -8,11 +8,11 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 
 ## Funkce
 
-- Prohlížení dostupných produktů
-- Filtrování a vyhledávání produktů
-- Vytváření a správa uživatelských profilů
-- Vytváření a správa inzerátů
-- Spojení se s prodejcem pomocí chatu
+- 🔍Prohlížení dostupných produktů
+- 🚀Filtrování a vyhledávání produktů
+- 👤Vytváření a správa uživatelských profilů
+- 📂Vytváření a správa inzerátů
+- 💬Spojení se s prodejcem pomocí chatu
 
 ## Technologický Stack
 
@@ -20,7 +20,7 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Django_logo.svg" alt="django logo" height="74" width="213">
 
 - Bootstrap
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo" height="128" width="110">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo" height="110" width="128">
 
 - HTML
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="bootstrap logo" height="128" width="80">
