@@ -43,7 +43,10 @@ Jsme otevřeni novým příspěvkům a vylepšením. Pokud máte nápad na vylep
 - Radim Tříletý
 - Vojtěch Kadlec
 
-## V 
+## Webová stránka
+
+Pokud nechcete stránku testovat na svém počítač ale pouze ji navštívit je to možné na [adrese](https://domovprojekt.com) (je ale důležité podotknout že server neběží příliš často)
+
 
 ---
 
