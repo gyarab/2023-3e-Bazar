@@ -23,7 +23,7 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo" height="128" width="110">
 
 - HTML
-
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="bootstrap logo" height="128" width="80">
 
 - CSS
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="bootstrap logo" height="128" width="80">
