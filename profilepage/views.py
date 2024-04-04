@@ -14,15 +14,15 @@ from django.conf import settings
 import uuid
 from django.urls import reverse
 from bs4 import BeautifulSoup
+from django.contrib.auth.decorators import login_required
 
-# TODO remove
-from django.core.exceptions import ValidationError
 
 # paypal
 from paypal.standard.forms import PayPalPaymentsForm
 
 
 # personal info page
+@login_required
 def personal_info(request):
     att = User_attachments.objects.get(user=request.user)
 
@@ -90,6 +90,7 @@ def personal_info(request):
 
 
 # displays a offer creating form and your offers
+@login_required
 def offers(request):
 
     # deletes all of request users uncompleted payments
@@ -145,6 +146,7 @@ def offers(request):
 
 
 # displays the offer editing page
+@login_required
 def offer(request, offer_id):
 
     # checks if your offer is expired and so if the renew button should be displayed
@@ -208,6 +210,7 @@ def refresh(request, offer_id):
 
 
 # if it is called adds to the importance to users offer
+@login_required
 def confirmed(request, payment_id):
     p = payment.objects.get(cid=payment_id)
     o = p.order
@@ -222,6 +225,7 @@ def confirmed(request, payment_id):
 
 
 # is called when the paypal payment didnt go through
+@login_required
 def cancel(request, offer_id):
     return render(request, "profilepage/payment_canceled.html")
 

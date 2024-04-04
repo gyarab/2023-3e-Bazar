@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,25 +10,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
+
 <body class="p-0 m-0 border-0 bd-example m-0 border-0" style="background-color: white;">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="{{request.META.HTTP_REFERER|escape}}">
+            <a class="navbar-brand" href="{% url 'home' %}">
                 <i class="bi bi-arrow-return-left"></i>
-            </a>        
+            </a>
             <a class="navbar-brand" href="{% url 'home' %}">Bazaros</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Přihlásit se</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'reset_password' %}">Nemůžete se přihlásit?</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Přihlásit se</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'reset_password' %}">Nemůžete se přihlásit?</a>
+                    </li>
                     </li>
                 </ul>
             </div>
@@ -80,16 +84,16 @@
                 <h4 class="alert-heading">Při registraci nastala chyba</h4>
                 <p>
                     Zkontrolujte zda:
-                    <ul>
-                        <li>Už u nás nemáte založený účet</li>
-                        <li>Je emailová adresa platná</li>
-                        <li>Heslo je dostatečně dlouhé</li>
-                        <li>Heslo obsahuje alespoň jedno číslo</li>
-                        <li>Heslo obsahuje alespoň jedno velké písmeno</li>
-                        <li>Heslo obsahuje alespoň jedno malé písmeno</li>
-                        <li>Jsou hesla stejná</li>
-                        <li>Jste správně vyplnili captchu</li>
-                    </ul>
+                <ul>
+                    <li>Už u nás nemáte založený účet</li>
+                    <li>Je emailová adresa platná</li>
+                    <li>Heslo je dostatečně dlouhé</li>
+                    <li>Heslo obsahuje alespoň jedno číslo</li>
+                    <li>Heslo obsahuje alespoň jedno velké písmeno</li>
+                    <li>Heslo obsahuje alespoň jedno malé písmeno</li>
+                    <li>Jsou hesla stejná</li>
+                    <li>Jste správně vyplnili captchu</li>
+                </ul>
                 </p>
                 <hr>
                 <p>Pokud již máte založený účet, můžete se přihlásit
@@ -105,7 +109,8 @@
         </form>
     </div>
     {% endif %}
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

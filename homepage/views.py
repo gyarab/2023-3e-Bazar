@@ -72,7 +72,6 @@ def index(request):
         else:
             display_directions = "dont-display"
 
-    # just context
     category = Category.objects.all()
     context = {
         "category": category,
