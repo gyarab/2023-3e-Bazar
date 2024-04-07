@@ -1,4 +1,5 @@
 {% autoescape off %}
+
 Dobrý den {{ user.first_name }},
 
 dostali jsme vaši žádost na změnění hesla pro váš účet. Pro pokračování ve změně hesla

@@ -156,7 +156,6 @@ def reset_password_custom(request):
                         "domain": "192.168.88.22",
                         "site_name": "Bazaroos",
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                        "protocol": "http",
                         "token": default_token_generator.make_token(user),
                         # ! Change before deployment
                         "protocol": "http",
@@ -171,8 +170,8 @@ def reset_password_custom(request):
                             [user.email],
                             fail_silently=False,
                         )
-                    except:
-                        return HttpResponse("Invalid header found.")
+                    except Exception as e: 
+                        return HttpResponse(e)
                 return redirect("/reset_password_sent/")
     else:
         password_form = PasswordResetForm()
