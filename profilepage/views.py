@@ -139,7 +139,7 @@ def offers(request):
     context = {
         "form": form,
         "att": att,
-        "orders": offers,
+        "offers": offers,
         "show": show_form,
     }
     return render(request, "profilepage/user_offers.html", context)
@@ -229,7 +229,7 @@ def confirmed(request, payment_id):
 def cancel(request, offer_id):
     return render(request, "profilepage/payment_canceled.html")
 
-
+@login_required
 def payment_redirect(request, offer_id):
     id = uuid.uuid4()
     payment.objects.create(

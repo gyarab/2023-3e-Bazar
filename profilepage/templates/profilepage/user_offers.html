@@ -43,70 +43,73 @@
       <div class="container-fluid">
          <div class="row">
             <div class="col-md-6">
-               {% for orders in orders %}
+               {% for offer in offers %}
                {% if att.theme == 'black' %}
-               <div class="offer_box" style="background-color: white;">
-                  {% else %}
-                  <div class="offer_box">
-                     {% endif %}
-                     <a href="{% url 'edit_offer' orders.id %}" class="color: white" style="text-decoration: none;">
-                        {{ offers.Title }}</a>
-                     <br>
-                     <br>
-                     <img src="{{ orders.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
-                  </div>
-                  {% endfor %}
-               </div>
+               <a href="{% url 'edit_offer' offer.id %}" class="color: white">
+                  <div class="offer_box" style="background-color: white;">
+                     {% else %}
+                     <div class="offer_box" style="background-color: black;">
+                        {% endif %}
+                        <a href="{% url 'edit_offer' offer.id %}" class="color: white" style="text-decoration: none;">
+                           {{ offer.Title }}
+                        </a>
+                        <br>
+                        <br>
+                        <img src="{{ offer.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
+                     </div>
+               </a>
+               {% endfor %}
+            </div>
 
-               {% if show %}
-               <div class="col-md-6">
-                  {% if att.theme == 'black' %}
-                  <form class="order1" method="post" action=".">
-                     {% csrf_token %}
-                     <label class="form-label" style="color: white;">Titulek</label>
-                     {% render_field form.title class+="form-control" %}
-                     <label class="form-label" style="margin-top: 10px; color: white;">Popis</label>
-                     <br>
-                     {{ form.description }}
-                     {{ form.media }}
-                     <label class="form-label" style="margin-top: 10px; color: white;">Kategorie</label>
-                     <br>
-                     {% render_field form.category class+="form-control" %}
-                     <label class="form-label" style="margin-top: 10px; color: white;">Cena</label>
-                     <br>
-                     {% render_field form.price class+="form-control" %}
-                     <button type="submit" class="form-button btn btn-light" style="margin-top: 10px;"
-                        type="submit">Vytvořit</button>
-                  </form>
-                  {% else %}
-                  <form class="order1" method="post" action=".">
-                     {% csrf_token %}
-                     <label class="form-label">Titulek</label>
-                     {% render_field form.title class+="form-control" %}
-                     <label class="form-label" style="margin-top: 10px;">Popis</label>
-                     <br>
-                     {{ form.description }}
-                     {{ form.media }}
-                     <label class="form-label" style="margin-top: 10px;">Kategorie</label>
-                     <br>
-                     {% render_field form.category class+="form-control" %}
-                     <label class="form-label" style="margin-top: 10px;">Cena</label>
-                     <br>
-                     {% render_field form.price class+="form-control" %}
-                     <button type="submit" class="form-button btn btn-dark" style="margin-top: 10px;"
-                        type="submit">Vytvořit</button>
-                  </form>
-                  {% endif %}
-               </div>
+            {% if show %}
+            <div class="col-md-6">
+               {% if att.theme == 'black' %}
+               <form class="order1" method="post" action=".">
+                  {% csrf_token %}
+                  <label class="form-label" style="color: white;">Titulek</label>
+                  {% render_field form.title class+="form-control" %}
+                  <label class="form-label" style="margin-top: 10px; color: white;">Popis</label>
+                  <br>
+                  {{ form.description }}
+                  {{ form.media }}
+                  <label class="form-label" style="margin-top: 10px; color: white;">Kategorie</label>
+                  <br>
+                  {% render_field form.category class+="form-control" %}
+                  <label class="form-label" style="margin-top: 10px; color: white;">Cena</label>
+                  <br>
+                  {% render_field form.price class+="form-control" %}
+                  <button type="submit" class="form-button btn btn-light" style="margin-top: 10px;"
+                     type="submit">Vytvořit</button>
+               </form>
                {% else %}
-               <div class="col-md-6">
-                  <p>před tím než vám bude povoleno vytvořit nový inzerát dopl%nte své osobní informace</p>
-               </div>
+               <form class="order1" method="post" action=".">
+                  {% csrf_token %}
+                  <label class="form-label">Titulek</label>
+                  {% render_field form.title class+="form-control" %}
+                  <label class="form-label" style="margin-top: 10px;">Popis</label>
+                  <br>
+                  {{ form.description }}
+                  {{ form.media }}
+                  <label class="form-label" style="margin-top: 10px;">Kategorie</label>
+                  <br>
+                  {% render_field form.category class+="form-control" %}
+                  <label class="form-label" style="margin-top: 10px;">Cena</label>
+                  <br>
+                  {% render_field form.price class+="form-control" %}
+                  <button type="submit" class="form-button btn btn-dark" style="margin-top: 10px;"
+                     type="submit">Vytvořit</button>
+               </form>
                {% endif %}
             </div>
+            {% else %}
+            <div class="col-md-6">
+               <p>před tím než vám bude povoleno vytvořit nový inzerát doplňte své osobní informace</p>
+            </div>
+            {% endif %}
          </div>
+      </div>
 
-         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
