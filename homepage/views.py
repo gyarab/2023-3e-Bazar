@@ -42,16 +42,6 @@ def index(request):
     else:
         color = "white"
 
-    # takes care of filtering
-    if "filter" in request.POST:
-        temp = useable(request)
-        if not temp == "failed":
-            offers = temp
-        else:
-            offers = "failed"
-    else:
-        offers = useable(request)
-
     # simple search
     if "search" in request.POST:
         offers = Offer.objects.filter(Title__contains=request.POST["searched_text"])
@@ -59,7 +49,8 @@ def index(request):
         if offers.count() == 0:
             offers = "failed"
 
-    # takes care of importance
+    # takes care of offers
+    offers = useable(request)
     offers_imp = importance(offers)
 
     # takes care of deciding if the directions filter should be displayed
@@ -81,7 +72,7 @@ def index(request):
     }
 
     # rendering the home.html
-    return render(request, "home.html", context)
+    return render(request, "homepage/home.html", context)
 
 
 def offer(request, offer_id):
@@ -103,12 +94,13 @@ def offer(request, offer_id):
         u = rate(request.POST)
 
         if u.is_valid():
-            rated = userRating(
-                offer_id,
-                u.cleaned_data["rating"],
-                u.cleaned_data["comment"],
-                request.user,
-            )
+            if u.cleaned_data["rating"] <= 10 and u.cleaned_data["rating"] >= 0:
+                rated = userRating(
+                    offer_id,
+                    u.cleaned_data["rating"],
+                    u.cleaned_data["comment"],
+                    request.user,
+                )
     else:
         u = rate()
 
@@ -133,7 +125,7 @@ def offer(request, offer_id):
         "comments": comments,
         "att": att,
     }
-    return render(request, "order.html", context)
+    return render(request, "homepage/offer.html", context)
 
 
 # is here so a custom mail can be sent
@@ -149,7 +141,7 @@ def reset_password_custom(request):
             if user_email.exists():
                 for user in user_email:
                     subject = "Změna hesla"
-                    email_template_name = "custom_mail.txt"
+                    email_template_name = "homepage/custom_mail.txt"
                     parameters = {
                         "email": user.email,
                         # ! Change before deployment
@@ -170,7 +162,7 @@ def reset_password_custom(request):
                             [user.email],
                             fail_silently=False,
                         )
-                    except Exception as e: 
+                    except Exception as e:
                         return HttpResponse(e)
                 return redirect("/reset_password_sent/")
     else:
@@ -178,7 +170,7 @@ def reset_password_custom(request):
     context = {
         "form": password_form,
     }
-    return render(request, "reset_password.html", context)
+    return render(request, "homepage/reset_password.html", context)
 
 
 # takes care of creating accounts
@@ -193,7 +185,7 @@ def signup(request):
     else:
         u = SignupForm()
 
-    return render(request, "signup.html", {"form": u})
+    return render(request, "homepage/signup.html", {"form": u})
 
 
 # simple method for loging out
