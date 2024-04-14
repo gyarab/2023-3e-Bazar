@@ -1,16 +1,16 @@
 # 2023-3e-Bazar
 
-## Pětihlav
+## Jezevec
 
 Jan Ševčík
 
-## Radim
+## NPC
 
 Radim Tříletý
 
 ## Faker
 
-Vojtěch Kadlec - zacni delat nebo ti snizim plat
+Vojtěch Kadlec
 
 ---
 
