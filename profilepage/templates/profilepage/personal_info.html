@@ -233,11 +233,12 @@
             <p class="Small">
                {% if chat_obj1 or chat_obj2 %}
                {% for chat in chat_obj1 %}
-               <a href="{% url 'chat' chat.offer_id chat.user_2.id %}">1</a>
+               <a href="{% url 'chat' chat.offer_id chat.user_2.id %}">You messaged {{ chat.user_2.username }}</a>
                <br>
                {% endfor %}
                {% for chat in chat_obj2 %}
-               <a href="{% url 'chat' chat.offer_id chat.user_1.id  %}">2</a>
+               <a href="{% url 'chat' chat.offer_id chat.user_1.id  %}">You were messaged by
+                  {{chat.user_1.username}}</a>
                <br>
                {% endfor %}
                {% else %}

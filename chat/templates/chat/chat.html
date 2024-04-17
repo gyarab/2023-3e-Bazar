@@ -1,24 +1,105 @@
-{% load widget_tweaks %}
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <title>Document</title>
+    <title>Chat Button</title>
+    <style>
+        #chatButton {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #chatButton:hover {
+            background-color: #0056b3;
+        }
+
+        #chatWindow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            max-width: 600px;
+            max-height: 800px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #chatMessages {
+            height: calc(100% - 85px);
+            overflow-y: scroll;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-bubble {
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .other-message-bubble {
+            background-color: #333;
+        }
+
+        #chatInput {
+            width: calc(100% - 20px);
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            resize: none;
+        }
+
+        #sendButton {
+            width: 100%;
+            background-color: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 0 5px 5px;
+            transition: background-color 0.3s;
+        }
+
+        #sendButton:hover {
+            background-color: #333;
+        }
+    </style>
 </head>
+
 <body>
-    <form action="." method="post">
-        {% csrf_token %}
-        <input type="text" name="message" id="message" class="form-control">
-        <button class="btn btn-dark" type="submit">Send</button>
-    </form>
-    {% if messages %}
-        {% for message in messages %}
-    <p>{{ message.message }}</p>
-        {% endfor %}
-    {% endif %}
+    <a href="{% url 'offer' chat.offer_id %}"><button id="chatButton">Zpět</button></a>
+
+    <div id="chatWindow">
+        <div id="chatMessages">
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.message_sender == request.user %}
+            <div class="message-bubble other-message-bubble">{{ message.message }}</div>
+            {% else %}
+            <div class="message-bubble">{{ message.message }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+        <textarea id="chatInput" placeholder="Napiš zprávu..."></textarea>
+        <button id="sendButton">Poslat</button>
+    </div>
 </body>
+
 </html>

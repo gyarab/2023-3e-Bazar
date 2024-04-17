@@ -9,7 +9,7 @@ import datetime
 # displays the chat with all of its messages
 def Chat(request, offer_id, user_id):
     # finds or cretes the correct chat
-    order = Offer.objects.get(id=offer_id)
+    offer = Offer.objects.get(id=offer_id)
     user_2 = User.objects.get(id=user_id)
     if chat.objects.filter(
         offer_id=offer_id, user_1=request.user, user_2=user_2
@@ -25,7 +25,7 @@ def Chat(request, offer_id, user_id):
         )
     else:
         chat_obj = chat.objects.create(
-            user_1=request.user, user_2=order.creator, offer_id=offer_id
+            user_1=request.user, user_2=offer.creator, offer_id=offer_id
         )
 
     # creates a new message

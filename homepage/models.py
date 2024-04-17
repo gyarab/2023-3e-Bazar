@@ -81,7 +81,7 @@ class Rating_Relation(models.Model):
 class chat(models.Model):
     # 1 user of the conversation
     user_1 = models.ForeignKey(User, related_name="User_1", on_delete=models.CASCADE)
-    # 2 user of the conversation
+    # 2 user of the conversation + created the offer
     user_2 = models.ForeignKey(User, related_name="User_2", on_delete=models.CASCADE)
     # the id of the offer that the chat is about
     offer_id = models.IntegerField(default=0)

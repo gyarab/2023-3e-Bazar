@@ -226,7 +226,7 @@ def confirmed(request, payment_id):
 
 # is called when the paypal payment didnt go through
 @login_required
-def cancel(request, offer_id):
+def cancel(request, payment_id):
     return render(request, "profilepage/payment_canceled.html")
 
 @login_required

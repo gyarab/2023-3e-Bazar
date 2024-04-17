@@ -1,22 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Payment Canceled</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .alert {
+            margin-top: 100px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .refused {
+            font-size: 3em;
+            color: red;
+            animation: refused 1s infinite;
+        }
+
+        @keyframes refused {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="box">
-                    <h1>Payment canceled</h1>
-                    <p>There has been an issue with your payment</p>
-                    <a href="{% url 'offers' %}"><button class="btn btn-close">Go back</button></a>
-                </div>
-            </div>
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Payment Canceled!</h4>
+            <p>Unfortunately, your payment has been canceled. Please try again or contact our support if you need help.
+            </p>
+            <hr>
+            <div class="refused">❌</div>
+            <a href="{% url 'offers' %}" class="btn btn-primary">Go back</a>
         </div>
     </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
