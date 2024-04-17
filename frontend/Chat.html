@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Button</title>
+<style>
+    #chatButton {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #chatButton:hover {
+        background-color: #0056b3;
+    }
+
+    #chatWindow {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        max-width: 600px;
+        max-height: 800px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    #chatMessages {
+        height: calc(100% - 85px);
+        overflow-y: scroll;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message-bubble {
+        background-color: #007bff;
+        color: white;
+        border-radius: 10px;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .other-message-bubble {
+        background-color: #333;
+    }
+
+    #chatInput {
+        width: calc(100% - 20px);
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        resize: none;
+    }
+  
+    #sendButton {
+        width: 100%;
+        background-color: #000;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 0 0 5px 5px;
+        transition: background-color 0.3s;
+    }
+
+    #sendButton:hover {
+        background-color: #333;
+    }
+</style>
+</head>
+<body>
+
+<button id="chatButton">Vyměnit (prvni)</button>
+
+<div id="chatWindow">
+    <div id="chatMessages"></div>
+    <textarea id="chatInput" placeholder="Napiš zprávu..."></textarea>
+    <button id="sendButton">Poslat</button>
+</div>
+
+<script>
+    const chatButton = document.getElementById('chatButton');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMessages = document.getElementById('chatMessages');
+    let isUserChat = true;
+
+    chatButton.addEventListener('click', () => {
+        isUserChat = !isUserChat;
+        chatButton.textContent = isUserChat ? 'Vyměnit (prvni)' : 'Vyměnit (druhy)';
+    });
+
+    const chatInput = document.getElementById('chatInput');
+    const sendButton = document.getElementById('sendButton');
+
+    sendButton.addEventListener('click', () => {
+        const message = chatInput.value.trim();
+        if (message !== '') {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message-bubble');
+            if (!isUserChat) {
+                messageElement.classList.add('other-message-bubble');
+            }
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    });
+</script>
+</body>
+</html>
