@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uprava</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css
+    ">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .centered_box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        .offer_box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="p-0 m-0 border-0 bd-example m-0 border-0">
+    
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'offers' %}">
+                <i class="bi bi-arrow-return-left"></i>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="#">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'personal_info' %}">Moje osobní
+                            informace</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="{% url 'delete_offer' offer_id %}" class="btn btn-danger">
+                        Smazat inzerát
+                    </a>
+                    <a href="{% url 'refresh' offer_id %}" class="btn btn-light ms-2">
+                        Obnovit inzerát
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="pt-5">
+        <div class="container offer_box" style="margin-bottom: 40px;">
+            <form method="post" action=".">
+                <div class="mb-3">
+                    <label class="form-label">Titulek:</label>
+                    <input type="text" class="form-control" name="title" value="{{ offer.Title }}">
+                    <button type="submit" class="btn btn-dark" style="margin-top: 15px;">Uložit změnu</button>
+                </div>
+            </form>
+            <form method="post" action=".">
+                <div class="row">
+                    <div class="col-sm">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris dictum facilisis augue. Fusce
+                        tellus odio, dapibus id
+                        fermentum quis, suscipit id erat. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus
+                        libero, eget facilisis
+                        enim ipsum id lacus. Curabitur sagittis hendrerit ante. Maecenas sollicitudin. Nunc tincidunt
+                        ante vitae massa. Neque
+                        porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia
+                        non numquam eius modi
+                        tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Fusce tellus odio,
+                        dapibus id fermentum quis,
+                        suscipit id erat. Aliquam id dolor. Phasellus rhoncus. Phasellus enim erat, vestibulum vel,
+                        aliquam a, posuere eu,
+                        velit. Aliquam erat volutpat. Etiam dictum tincidunt diam. Praesent id justo in neque elementum
+                        ultrices. Mauris
+                        elementum mauris vitae tortor. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus
+                        libero, eget facilisis enim
+                        ipsum id lacus. Integer malesuada. Maecenas lorem.
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3" id="desc">
+                            <button type="submit" class="btn btn-dark" style="margin-top: 15px;">Změnit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form method="post" action=".">
+                <div class="mb-3">
+                    <label class="form-label">Cena:</label>
+                    <input type="number" class="form-control" name="price" value="{{ offer.price }}">
+                    <button type="submit" class="btn btn-dark" style="margin-top: 15px;">Uložit změnu</button>
+                </div>
+            </form>
+            <form method="post" action=".">
+                <div class="mb-3">
+                    <label class="form-label">Kategorie:</label>
+                    <select class="form-control filter" id="Category" name="category" value="{{ offer.category }}">
+                        <option value="none">Any</option>
+                        <option value="1">Kategorie 1</option>
+                        <option value="2">Kategorie 2</option>
+                    </select>
+                    <button type="submit" class="btn btn-dark" style="margin-top: 15px;">Uložit změnu</button>
+                </div>
+            </form>
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <h3>Pokud potřebujete zviditelnit svuj inzerat:</h3>
+                    <p>Cena: 10 Eur</p>
+                    <a href="{% url 'paypal_redirect' offer_id %}"><button class="btn btn-dark">Buy now</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js
+    "></script>
+    <script>
+        function changeEditDiscVisibility() {
+            document.getElementById("desc").style.display = "block";
+        }
+    </script>
+</body>
+
+</html>
