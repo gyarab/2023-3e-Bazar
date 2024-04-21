@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body class="p-0 m-0 border-0 bd-example m-0 border-0">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="bi bi-arrow-return-left"></i>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="navbar-brand" href="#">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'personal_info' %}">Moje osobní
+                            informace</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <a href="{% url 'edit_offer' offer.id %}" style="color: white; text-decoration: none;">
+                    <div class="offer_box" style="background-color: black; display: flex; align-items: center;">
+                        <div class="content" style="flex: 1;">
+                            <h2>{{ offer.Title }}</h2>
+                            <p>{{ offer.Price }}</p>
+                            <p>{{ offer.Description }}</p>
+                        </div>
+                        <img class="responsive-image" src="https://jollycontrarian.com/images/thumb/6/6c/Rickroll.jpg/640px-Rickroll.jpg" alt="preview" style="max-height: 250px; max-width: 200px;">
+                    </div>
+                </a>
+            </div>
+            <div class="col 12 col-md-6">
+                <p>před tím než vám bude povoleno vytvořit nový inzerát doplňte své osobní informace</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
