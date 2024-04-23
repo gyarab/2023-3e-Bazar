@@ -1,9 +1,58 @@
 div.box{
-    height: 170px;
     margin: 20px 20px;
+    padding: 20px;
     text-align: center;
     border-radius: 10px;
+    display: flex;
 }
+
+div.box .content,
+div.box .image {
+    flex: 1;
+}
+
+.responsive-image {
+    height: 100%;
+    max-width: 100%;
+}
+@media (max-width: 1024px) {
+    .responsive-image {
+        height: 75%;
+    }
+    
+    .content {
+        font-size: 90%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .responsive-image {
+        height: 65%;
+    }
+    
+    .content {
+        font-size: 80%;
+    }
+}
+@media (max-width: 768px) {
+    div.box {
+        flex-direction: column;
+    }
+    
+    .responsive-image {
+        height: 25%;
+    }
+}
+@media (min-width: 575px) and (max-width: 767px) {
+    div.box {
+        flex-direction: column;
+    }
+    
+    .responsive-image {
+        width: 80%;
+    }
+}
+
 .popup {
     position: fixed;
     top: 50%;

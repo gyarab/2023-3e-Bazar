@@ -11,6 +11,42 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+div.box .content, div.box .image {
+    flex: 1;
+}
+
+.responsive-image {
+    height: 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .responsive-image {
+        height: 65%; /* adjust as needed */
+    }
+    .content {
+        font-size: 70%; /* adjust as needed */
+    }
+}
+
+@media (min-width: 375px) and (max-width: 475px) {
+    .responsive-image {
+        height: 60%; /* adjust as needed */
+    }
+    .content {
+        font-size: 50%; /* adjust as needed */
+    }
+}
+
+@media (min-width: 0px) and (max-width: 374px) {
+    .responsive-image {
+        height: 35%; /* adjust as needed */
+    }
+    .content {
+        font-size: 30%; /* adjust as needed */
+    }
+}
 .Big {
     color: #343a40;
     font-size: larger;

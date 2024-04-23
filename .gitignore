@@ -5,3 +5,4 @@ Pipfile
 Pipfile.lock
 TODO
 Bazar.sock
+__pycache__/

@@ -145,9 +145,14 @@
                             {% if color %}
                             {% if color == 'white' %}
                             <div class="box" style="background-color: #212529;">
-                                <p>{{ offer.Title }}</p>
-                                <img src="{{ offer.preview }}" alt="preview"
-                                    style="max-height: 100px; max-width: 100px;">
+                                <div class="content" style="margin-top: 15px;">
+                                    <h2>{{ offer.Title }}</h2>
+                                    <h3>cena: {{ offer.price }}</h3>
+                                </div>
+                                <div class="image" style="margin-top: 15px;">
+                                    <img class="responsive-image" src="{{ offer.preview }}" alt="preview"
+                                        style="max-height: 200px; max-width: 200px;">
+                                </div>
                             </div>
                             {% else %}
                             <div class="box" style="background-color: #F8F9FA; color: #212529;">

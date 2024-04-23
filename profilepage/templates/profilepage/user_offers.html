@@ -50,12 +50,15 @@
                      {% else %}
                      <div class="offer_box" style="background-color: black;">
                         {% endif %}
-                        <a href="{% url 'edit_offer' offer.id %}" class="color: white" style="text-decoration: none;">
-                           {{ offer.Title }}
-                        </a>
-                        <br>
-                        <br>
-                        <img src="{{ offer.preview }}" alt="preview" style="max-height: 100px; max-width: 100px;">
+                        <div class="content" style="flex: 1;">
+                           <a href="{% url 'edit_offer' offer.id %}" class="color: white"
+                              style="text-decoration: none;">
+                              <h2>{{ offer.Title }}</h2>
+                           </a>
+                           <p>{{ offer.Price }}</p>
+                        </div>
+                        <img class="responsive-image" src="{{ offer.preview }}" alt="preview"
+                           style="max-height: 250px; max-width: 200px;">
                      </div>
                </a>
                {% endfor %}
