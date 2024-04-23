@@ -30,6 +30,7 @@ def index(request):
     ):
         att = User_attachments()
         att.user = request.user
+        att.theme = "black"
         att.save()
     color = "white"
 
@@ -51,7 +52,10 @@ def index(request):
             offers = "failed"
 
     # takes care of offers
-    offers = useable(request)
+    if "search" not in request.POST:
+        offers = useable(request)
+    else:
+        offers = Offer.objects.filter(Title__contains=request.POST["searched_text"])
     offers_imp = importance(offers)
 
     # takes care of deciding if the directions filter should be displayed

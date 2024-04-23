@@ -46,16 +46,19 @@
                {% for offer in offers %}
                {% if att.theme == 'black' %}
                <a href="{% url 'edit_offer' offer.id %}" class="color: white">
-                  <div class="offer_box" style="background-color: white;">
+                  <div class="offer_box" style="background-color: white; color: black;">
                      {% else %}
-                     <div class="offer_box" style="background-color: black;">
+                     <div class="offer_box" style="background-color: #212529; color: white;">
                         {% endif %}
                         <div class="content" style="flex: 1;">
-                           <a href="{% url 'edit_offer' offer.id %}" class="color: white"
-                              style="text-decoration: none;">
-                              <h2>{{ offer.Title }}</h2>
-                           </a>
-                           <p>{{ offer.Price }}</p>
+                           {% if att.theme == 'black' %}
+                           <a href="{% url 'edit_offer' offer.id %}" style="text-decoration: none; color: black">
+                              {% else %}
+                              <a href="{% url 'edit_offer' offer.id %}" style="text-decoration: none; color: white">
+                                 {% endif %}
+                                 <h2>{{ offer.Title }}</h2>
+                              </a>
+                              <p>cena: {{ offer.price }}</p>
                         </div>
                         <img class="responsive-image" src="{{ offer.preview }}" alt="preview"
                            style="max-height: 250px; max-width: 200px;">

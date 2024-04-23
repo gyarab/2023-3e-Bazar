@@ -141,7 +141,7 @@
                     {% else %}
                     {% for offer in order %}
                     <div class="col-12 col-sm-6">
-                        <a href="{% url 'offer' offer.id %}" style="text-decoration: none">
+                        <a href="{% url 'offer' offer.id %}" style="text-decoration: none; color: white;">
                             {% if color %}
                             {% if color == 'white' %}
                             <div class="box" style="background-color: #212529;">
@@ -156,16 +156,26 @@
                             </div>
                             {% else %}
                             <div class="box" style="background-color: #F8F9FA; color: #212529;">
-                                <p>{{ offer.Title }}</p>
-                                <img src="{{ offer.preview }}" alt="preview"
-                                    style="max-height: 100px; max-width: 100px;">
+                                <div class="content" style="margin-top: 15px;">
+                                    <h2>{{ offer.Title }}</h2>
+                                    <h3>cena: {{ offer.price }}</h3>
+                                </div>
+                                <div class="image" style="margin-top: 15px;">
+                                    <img class="responsive-image" src="{{ offer.preview }}" alt="preview"
+                                        style="max-height: 200px; max-width: 200px;">
+                                </div>
                             </div>
                             {% endif %}
                             {% else %}
                             <div class="box" style="background-color: #212529; color:white;">
-                                <p>{{ offer.Title }}</p>
-                                <img src="{{ offer.preview }}" alt="preview"
-                                    style="max-height: 100px; max-width: 100px;">
+                                <div class="content" style="margin-top: 15px;">
+                                    <h2>{{ offer.Title }}</h2>
+                                    <h3>cena: {{ offer.price }}</h3>
+                                </div>
+                                <div class="image" style="margin-top: 15px;">
+                                    <img class="responsive-image" src="{{ offer.preview }}" alt="preview"
+                                        style="max-height: 200px; max-width: 200px;">
+                                </div>
                             </div>
                             {% endif %}
                         </a>
@@ -221,14 +231,6 @@
                         <label for="distance" class="form-label filter">Lokace:</label>
                         <input type="number" class="form-control filter" id="distance"
                             placeholder="Jak daleko od vás (v kilometrech)" name="distance" />
-                    </div>
-                    <div class="container">
-                        <div class="alert alert-dark">
-                            <p>
-                                It works but it is really really slow. It takes about 30 seconds to load the results. I
-                                will probably never improve it.
-                            </p>
-                        </div>
                     </div>
                     {% endif %}
                     <button class="btn btn-secondary green-button" style="

@@ -198,12 +198,9 @@
             <div id="postal" style="display: none;">
                <form action="" method="post">
                   {% csrf_token %}
-                  {% render_field form.City class+="form-control" style+="margin-bottom: 15px; max-width: 300px;"
-                  placeholder+="Město" %}
-                  {% render_field form.Street class+="form-control" style+="margin-bottom: 15px; max-width: 300px;"
-                  placeholder+="Ulice" %}
-                  {% render_field form.Postal_code class+="form-control" style+="max-width: 300px"
-                  placeholder+="Poštovní směrovací číslo" %}
+                  {% render_field form.City class+="form-control" style+="margin-bottom: 15px; max-width: 300px;" placeholder+="Město" %}
+                  {% render_field form.Street class+="form-control" style+="margin-bottom: 15px; max-width: 300px;" placeholder+="Ulice" %}
+                  {% render_field form.Postal_code class+="form-control" style+="max-width: 300px"; placeholder+="Poštovní směrovací číslo" %}
                   <button class="btn btn-secondary btn-sm" onclick="closeDiv('postal')" type="submit"
                      style="margin: 10px 10px 10px;">Přidat</button>
                </form>

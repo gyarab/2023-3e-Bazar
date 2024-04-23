@@ -97,8 +97,11 @@
             {% endfor %}
             {% endif %}
         </div>
-        <textarea id="chatInput" placeholder="Napiš zprávu..."></textarea>
-        <button id="sendButton">Poslat</button>
+        <form action="." method="post">
+            {% csrf_token %}
+            <textarea id="chatInput" placeholder="Napiš zprávu..." name="message"></textarea>
+            <button id="sendButton" type="submit">Poslat</button>
+        </form>
     </div>
 </body>
 

@@ -6,3 +6,5 @@ Pipfile.lock
 TODO
 Bazar.sock
 __pycache__/
+media/
+static/

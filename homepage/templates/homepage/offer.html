@@ -156,7 +156,7 @@
                         {% endif %}
                         {{ order.description|safe }}
                     </div>
-
+                    {% if comments %}
                     {% if color == 'white' %}
                     <div class="text_box" style="color: white; background-color: #212529;">
                         {% else %}
@@ -173,7 +173,9 @@
                                 </div>
                                 {% endfor %}
                             </div>
+                            {% endif %}
 
+                            {% if request.user.is_authenticated and not request.user == order.creator and not rated == 'failed' and not relation %}
                             {% if color == 'white' %}
                             <div class="text_box" style="color: white; background-color: #212529;">
                                 {% else %}
@@ -181,16 +183,12 @@
                                     {% endif %}
                                     <h3 style="text-align: center; margin-top: 10px; margin-bottom: 30px;">Ohodnotit
                                         uživatele</h3>
-                                    {% if not relation %}
-                                    {% if request.user.is_authenticated and not request.user == order.creator %}
                                     <form action="." class="centered-form" method="post">
                                         <div class="centered-form">
                                             {% csrf_token %}
-                                            {% render_field form.rating class+="form-control" style+="max-width: 400px;"
-                                            %}
+                                            {% render_field form.rating class+="form-control" style+="max-width: 400px;"%}
                                             <br>
-                                            {% render_field form.comment class+="form-control" style+="max-width:
-                                            400px;" %}
+                                            {% render_field form.comment class+="form-control" style+="max-width: 400px;" %}
                                             {% if rated == 'success' %}
                                             <p>Uživatel byl ohodnocen</p>
                                             {% elif rated == 'failed' %}
@@ -206,15 +204,8 @@
                                                 </button>
                                         </div>
                                     </form>
-                                    {% elif not request.user.is_authenticated %}
-                                    <p>Nejste zaregistrováni, proto nemůžete hodnotit uživatele</p>
-                                    {% else %}
-                                    <p>Nemůžete hodnotit sami sebe</p>
-                                    {% endif %}
-                                    {% else %}
-                                    <p>Uz jste uzivatele hodnotili</p>
-                                    {% endif %}
                                 </div>
+                                {% endif %}
 
                                 {% if color == 'white' %}
                                 <p style="font-size: 12px; margin-top: 15px; margin-bottom: 10px;">
