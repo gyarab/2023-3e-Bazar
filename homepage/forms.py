@@ -22,6 +22,7 @@ class LoginForm(AuthenticationForm):
     )
 
 # form used for users registration
+# Captcha taken from https://www.youtube.com/watch?v=8rWXdkUn3PM
 class SignupForm(UserCreationForm):
     captcha = CaptchaField()
 

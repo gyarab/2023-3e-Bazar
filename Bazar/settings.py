@@ -46,23 +46,25 @@ INSTALLED_APPS = [
     "homepage",
     "profilepage",
     "chat",
-    # other apps
+    # other apps - from https://medium.com/@guddin93/how-to-add-a-custom-rich-text-editor-in-your-django-website-13914f048cc6,
+    # https://www.youtube.com/watch?v=W61PvbzQaMw
     "widget_tweaks",
     "ckeditor",
     "ckeditor_uploader",
-    # apps needed for google login
+    # apps needed for google login - from https://www.youtube.com/watch?v=yO6PP0vEOMc
     "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
-    # captcha
+    # captcha - taken from https://www.youtube.com/watch?v=8rWXdkUn3PM
     "captcha",
-    # paypal
+    # paypal - tutorial at https://www.youtube.com/watch?v=LJ7pzebXX6g
     "paypal.standard.ipn",
 ]
 
 # allauth settings
+# Taken from https://www.youtube.com/watch?v=yO6PP0vEOMc
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": ["profile", "email"],
@@ -80,6 +82,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # line below taken from https://www.youtube.com/watch?v=yO6PP0vEOMc
     "allauth.account.middleware.AccountMiddleware",
 ]
 
@@ -103,6 +106,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "Bazar.wsgi.application"
 
+# Config tutorial at https://stackpython.medium.com/how-to-start-django-project-with-a-database-postgresql-aaa1d74659d8
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -145,13 +149,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# allauth settings
+# allauth settings - taken from https://www.youtube.com/watch?v=yO6PP0vEOMc
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # ckeditor config part of settings
+# Taken from https://stackoverflow.com/questions/69498691/ckeditor-user-friendly-image-upload
 CKEDITOR_CONFIGS = {
     "default": {
         "skin": "n1theme",
@@ -179,15 +184,16 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-# path to where
+# path to where images are uploaded
+# Taken from https://www.youtube.com/watch?v=W61PvbzQaMw 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # paypal settings
+# Taken from https://www.youtube.com/watch?v=LJ7pzebXX6g
 PAYPAL_RECEIVER_EMAIL = config["PAYPAL_EMAIL"]
 PAYPAL_TEST = True
 
 # email backend settings
-# TODO still not working
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.seznam.cz'
@@ -200,4 +206,5 @@ EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 CSRF_TRUSTED_ORIGINS = ["http://192.168.88.22", "http://domovprojekt.com"]
 
 # default paypal button
+# Taken from ttps://www.youtube.com/watch?v=LJ7pzebXX6g
 PAYPAL_BUY_BUTTON_IMAGE = "/media/images/paypal.jpg"

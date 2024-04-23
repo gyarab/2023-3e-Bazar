@@ -42,6 +42,7 @@ def index(request):
     else:
         color = "white"
 
+    # Taken from https://www.youtube.com/watch?v=AGtae4L5BbI
     # simple search
     if "search" in request.POST:
         offers = Offer.objects.filter(Title__contains=request.POST["searched_text"])
@@ -129,6 +130,7 @@ def offer(request, offer_id):
 
 
 # is here so a custom mail can be sent
+# taken from https://www.youtube.com/watch?v=0pa75ch0S4E
 def reset_password_custom(request):
     with open("config.json") as config_file:
         config = json.load(config_file)
@@ -149,7 +151,6 @@ def reset_password_custom(request):
                         "site_name": "Bazaroos",
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "token": default_token_generator.make_token(user),
-                        # ! Change before deployment
                         "protocol": "http",
                         "user": user,
                     }
@@ -195,6 +196,7 @@ def out(request):
 
 
 # Takes care of switching between light and dark mode
+# Taken from https://www.youtube.com/watch?v=gHgCr6ctfSU
 def theme(request):
     color = request.GET.get("color")
 
@@ -418,21 +420,3 @@ def place_splitting(att):
     string += "Czech%20Republic"
 
     return string
-
-
-# Test method for generating test offers
-# TODO nakonci smazat
-def generate(request):
-    Offer.objects.all().delete()
-    for i in range(100):
-        o = Offer()
-        o.Title = "Test" + str(i)
-        o.mail = "test" + str(i) + "@test.com"
-        o.price = i
-        o.phone_number = "123456789"
-        o.description = "test"
-        o.creation_date = datetime.now() + timedelta(days=30)
-        o.expired = False
-        o.creator = request.user
-        o.category = Category.objects.get(pk=1)
-        o.save()

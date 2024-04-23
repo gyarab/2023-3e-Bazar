@@ -239,7 +239,7 @@ def payment_redirect(request, offer_id):
     )
     # ! paypal
     host = request.get_host()
-    # paypal checkout info
+    # paypal checkout info - taken from https://www.youtube.com/watch?v=LJ7pzebXX6g
     paypal_checkout = {
         "business": settings.PAYPAL_RECEIVER_EMAIL,
         "amount": "10",

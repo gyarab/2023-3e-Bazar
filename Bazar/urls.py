@@ -21,15 +21,16 @@ urlpatterns = [
     path("profilepage/", include("profilepage.urls"), name="profile"),
     # path to the chat page
     path("chat/", include("chat.urls"), name="chat"),
-    # google
+    # google - taken from source https://www.youtube.com/watch?v=yO6PP0vEOMc
     path("accounts/", include("allauth.urls")),
-    # captcha
+    # captcha - taken from https://www.youtube.com/watch?v=8rWXdkUn3PM
     path("captcha/", include("captcha.urls")),
-    # ckeditor
+    # ckeditor uploader path - from https://www.youtube.com/watch?v=W61PvbzQaMw
     path("ckeditor/upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"),
     path("ckeditor/browse/", never_cache(login_required(ckeditor_views.browse)), name="ckeditor_browse"),
-    # paypal
+    # paypal - from https://www.youtube.com/watch?v=LJ7pzebXX6g
     path("paypal/", include("paypal.standard.ipn.urls")),
+    # ckeditor - from https://medium.com/@guddin93/how-to-add-a-custom-rich-text-editor-in-your-django-website-13914f048cc6
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

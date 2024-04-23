@@ -5,6 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingFormField
 
 
 # the form used for making an offer
+# RichTextUploadingForm taken from https://www.youtube.com/watch?v=W61PvbzQaMw
 class MakeAnOffer(forms.Form):
     title = forms.CharField(label="Title", max_length=255)
     description = RichTextUploadingFormField()

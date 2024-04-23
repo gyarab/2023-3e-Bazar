@@ -20,6 +20,7 @@ urlpatterns = [
         name="login",
     ),
     # password reset
+    # Taken from https://www.youtube.com/watch?v=hnfwCFRKqh8
     path(
         "reset_password/",
         views.reset_password_custom,
