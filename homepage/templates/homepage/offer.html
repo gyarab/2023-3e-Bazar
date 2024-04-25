@@ -7,37 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bazaroos - {{ order.Title }}</title>
-    <link rel="stylesheet" href="style.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css
     ">
+    <link rel="shortcut icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        .text_box {
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 40px;
-        }
-
-        .comment {
-            border-radius: 10px;
-            min-height: 30px;
-            max-width: 500px;
-            text-align: center;
-
-            margin: auto;
-            width: 50%;
-        }
-
-        .centered-form {
-            margin: auto;
-            width: 50%;
-        }
-
-        .img {
-            max-width: 100px;
-            max-height: 100px;
-        }
-    </style>
 </head>
 
 
@@ -165,9 +140,9 @@
                             <h3 style="text-align: center; margin-top: 10px;">Komentáře</h3>
                             {% for comment in comments %}
                             {% if color == 'white' %}
-                            <div class="comment" style="background-color: #F8F9FA; color: black;">
+                            <div class="comment" style="background-color: #F8F9FA; color: black; margin-top: 5px;">
                                 {% else %}
-                                <div class="comment" style="background-color: #212529; color: white;">
+                                <div class="comment" style="background-color: #212529; color: white; margin-top: 5px;">
                                     {% endif %}
                                     <p style="margin-left: 10px;">{{ comment.comment }}</p>
                                 </div>

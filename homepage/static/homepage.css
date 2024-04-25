@@ -6,8 +6,7 @@ div.box{
     display: flex;
 }
 
-div.box .content,
-div.box .image {
+div.box .content, div.box .image {
     flex: 1;
 }
 
@@ -73,76 +72,6 @@ div.box .image {
     margin: 20px 0 10px;
 }
 
-.range {
-    height: 80px;
-    width: 380px;
-    margin-bottom: 30px;
-    margin-top: 30px;
-}
-.range .range_value {
-    position: relative;
-    width: 100%;
-}
-.range .range_value span{
-    position: absolute;
-    height: 45px;
-    width: 45px;
-    font-weight: 3000;
-    font-size: 10px;
-    top: -50px;
-    transform: translateX(-50%) scale(0);
-    transition: transform 0.3s ease-in-out;
-    transform-origin: bottom;;
-    line-height: 55px;
-    z-index: 2;
-}
-.range .range_value span.show{
-    transform: translateX(-50%) scale(1);
-}
-.range .range_value span:after{
-    position: absolute;
-    content: '';
-    height: 45px;
-    width: 45px;
-    background: grey;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    line-height: 55px;
-    border: 3px solid #fff;
-    z-index: -1;
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom-left-radius: 50%;
-}
-.range .range_field {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-.range .range_field .value {
-    position: absolute;
-    font-size: 15px;
-    font-weight: 600;
-}
-.range .range_field .value.left {
-    left: -22px;
-}
-.range .range_field .value.right {
-    right: -60px;
-}
-.range .range_field input{
-    -webkit-appearance: none;
-    appearance: none;
-    height: 3px;
-    width: 100%;
-    background: #d3d3d3;
-    border-radius: 5px;
-    outline: none;
-    border: none;
-}
-
 .button-mode-dark:hover{
     background-color: red;
     color: black;
@@ -205,4 +134,29 @@ input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.text_box {
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 40px;
+}
+
+.comment {
+    border-radius: 10px;
+    min-height: 30px;
+    max-width: 500px;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+}
+
+.centered-form {
+    margin: auto;
+    width: 50%;
+}
+
+.img {
+    max-width: 100px;
+    max-height: 100px;
 }
