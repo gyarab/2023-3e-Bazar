@@ -95,7 +95,7 @@ def offers(request):
 
     # deletes all of request users uncompleted payments
     if payment.objects.filter(user=request.user, completed=False).exists():
-        p = payment.objects.filter(user=request.user, completed=False).delete()
+        payment.objects.filter(user=request.user, completed=False).delete()
 
     offers = Offer.objects.filter(creator=request.user)
 
