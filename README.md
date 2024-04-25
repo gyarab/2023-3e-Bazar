@@ -27,10 +27,10 @@ Bazaroos umožňuje uživatelům procházet a inzerovat produkty online. Uživat
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap logo" height="110" width="128">
 
 - HTML
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="bootstrap logo" height="128" width="80">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="html logo" height="128" width="80">
 
 - CSS
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="bootstrap logo" height="128" width="80">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css logo" height="128" width="80">
 
 
 ## Instalace
@@ -62,4 +62,4 @@ Pokud nechcete stránku testovat na svém počítač ale pouze ji navštívit je
 
 
 ---
-
+Disclaimer: Toto readme bylo vygenerováno za pomoci [chatGPT](https://askaichat.app/onboarding-inf?utm_source=google&utm_medium=web&utm_campaign=askai_website_con_go_search_wo_en_purchase_informative_030124&utm_term=askai_website_con_go_search_wo_en_purchase_informative_030124&gad_source=1&gclid=Cj0KCQjw_qexBhCoARIsAFgBles6eMdgGFQ7M8zn1Pkvbj3Viv9s1ZI5aSOdB_3mURDEcX1L0e3s_MgaAuAwEALw_wcB)
