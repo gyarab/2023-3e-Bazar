@@ -1,0 +1,291 @@
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Vaše osobní informace</title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   <link rel="shortcut icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'profilepage.css' %}">
+</head>
+
+<body class="p-0 m-0 border-0 bd-example m-0 border-0" style="background-color: {{att.theme}};">
+   {% if att.theme == 'black' %}
+   <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+      {% else %}
+      <nav class="navbar navbar-light bg-light navbar-expand-lg">
+         {% endif %}
+         <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+               <i class="bi bi-arrow-return-left"></i>
+            </a>
+            <a class="navbar-brand" href="#">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  {% if att.City != "" and att.phone_number != "" and att.Street != "" and att.Postal_code %}
+                  <li class="nav-item">
+                     <a class="nav-link active" aria-current="page" href="{% url 'offers' %}">Moje inzeráty</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                     <a class="nav-link disabled" aria-current="page" href="{% url 'offers' %}">Moje inzeráty - přidejte
+                        osobní informace</a>
+                  </li>
+                  {% endif %}
+               </ul>
+               <a href="{% url 'reset_password' %}" style="margin-right: 15px;">
+                  {% if att.theme == 'black' %}
+                  <button class="btn btn-light btn-md">
+                     {% else %}
+                     <button class="btn btn-dark btn-md">
+                        {% endif %}
+                        Změnit heslo
+                     </button>
+               </a>
+               <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">
+                  Smazat účet
+               </button>
+            </div>
+         </div>
+      </nav>
+      <div class="container  max-width: 600px; margin: 50px auto;">
+         {% if att.theme == 'black' %}
+         <h2 style="margin-top: 30px; color: white;">Personal Data</h2>
+         {% else %}
+         <h2 style="margin-top: 30px; color: black;">Personal Data</h2>
+         {% endif %}
+         <div class="box" style="background-color: white;">
+            <!--Username-->
+            <p class="Big">Uživatelské jméno:</p>
+            <p class="Small">{{ request.user.username }} </p>
+
+            <!--Email-->
+            <p class="Big">Email:</p>
+            <p class="Small">{{ request.user.email }}</p>
+
+            <!--Phone-->
+            <p class="Big">Telefoní číslo:</p>
+            {% if att.phone_number %}
+            <p class="Small">{{ att.phone_number }}
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('phone')"
+                  id="phone_btn">Upravit</button>
+            <div id="phone" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="Jiné telefoní číslo"
+                     aria-label="Phone" aria-describedby="basic-addon1" name="edit_phone_number">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('phone')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('phone')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            {% else %}
+            <p class="Small">Neuvedeno
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('phone_create')"
+                  id="phone_create_btn">Přidat</button>
+            <div id="phone_create" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="Jiné telefoní číslo"
+                     aria-label="Phone" aria-describedby="basic-addon1" name="create_phone_number">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('phone_create')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('phone_create')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            {% endif %}
+
+            <!--Jmeno-->
+            <p class="Big">Jméno:</p>
+            <p class="Small">{{ request.user.first_name }}
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('name')"
+                  id="name_btn">Upravit</button>
+            <div id="name" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="Jméno" aria-label="name"
+                     aria-describedby="basic-addon1" name="edit_name">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('name')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('name')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+
+            <!--Prijmeni-->
+            <p class="Big">Příjmení:</p>
+            <p class="Small">{{ request.user.last_name }}
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('surname')"
+                  id="surname_btn">Upravit</button>
+            <div id="surname" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="Příjmení"
+                     aria-label="surname" aria-describedby="basic-addon1" name="edit_surname">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('surname')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('surname')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            <p class="Big">Adresa:</p>
+            {% if att.City %}
+            <p class="Small">{{ att.City }}
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('city')"
+                  id="city_btn">Upravit</button>
+            <div id="city" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="Město" aria-label="city"
+                     aria-describedby="basic-addon1" name="edit_city">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('city')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('city')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            <p class="Small">{{ att.Street }}
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('street')"
+                  id="street_btn">Upravit</button>
+            <div id="street" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="Ulice"
+                     aria-label="street" aria-describedby="basic-addon1" name="edit_street">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('street')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('street')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            <p class="Small">{{ att.Postal_code }}
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('postal')"
+                  id="postal_btn">Upravit</button>
+            <div id="postal" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <input style="max-width: 300px;" type="tel" class="form-control" placeholder="PSČ" aria-label="postal"
+                     aria-describedby="basic-addon1" name="edit_postal">
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('postal')" type="submit"
+                     style="margin: 10px 10px 10px;">Upravit</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('postal')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            {% else %}
+            <p class="Small">Neuvedena
+               <button class="btn btn-dark btn-sm" style="margin-left: 20px;" onclick="edit('postal')"
+                  id="postal_btn">Přidat adresu</button>
+            <div id="postal" style="display: none;">
+               <form action="" method="post">
+                  {% csrf_token %}
+                  {% render_field form.City class+="form-control" style+="margin-bottom: 15px; max-width: 300px;" placeholder+="Město" %}
+                  {% render_field form.Street class+="form-control" style+="margin-bottom: 15px; max-width: 300px;" placeholder+="Ulice" %}
+                  {% render_field form.Postal_code class+="form-control" style+="max-width: 300px"; placeholder+="Poštovní směrovací číslo" %}
+                  <button class="btn btn-secondary btn-sm" onclick="closeDiv('postal')" type="submit"
+                     style="margin: 10px 10px 10px;">Přidat</button>
+               </form>
+               <button class="btn btn-secondary btn-sm" onclick="closeDiv('postal')"
+                  style="margin-left: 14px;">Zavřít</button>
+            </div>
+            </p>
+            {% endif %}
+            <p class="Big">Vaše hodnocení:</p>
+            {% if not att.rating == 0 %}
+            <p class="Small">{{ att.rating }}</p>
+            {% else %}
+            <p class="Small">Zatím nemáte žádné hodnocení</p>
+            {% endif %}
+            <p class="Big">Komentáře:</p>
+            <p class="Small">
+               {% if relation %}
+               {% for relation in relation %}
+               {{ relation.comment }}
+               <br>
+               {% endfor %}
+               {% else %}
+               Zatím nemáte žádné komentáře
+               {% endif %}
+            </p>
+            <p class="Big">Vaše diskuze:</p>
+            <p class="Small">
+               {% if chat_obj1 or chat_obj2 %}
+               {% for chat in chat_obj1 %}
+               <a href="{% url 'chat' chat.offer_id chat.user_2.id %}">You messaged {{ chat.user_2.username }}</a>
+               <br>
+               {% endfor %}
+               {% for chat in chat_obj2 %}
+               <a href="{% url 'chat' chat.offer_id chat.user_1.id  %}">You were messaged by
+                  {{chat.user_1.username}}</a>
+               <br>
+               {% endfor %}
+               {% else %}
+               Zatím nemáte žádné diskuze
+               {% endif %}
+            </p>
+         </div>
+         <div class="text-center mt-3">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Smazat účet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                        Jste si jist/a ze chcete smazat ucet (tato akce je nevratna)?
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>
+                        <button type="button" class="btn btn btn-danger">
+                           <a class="link-light" href="{% url 'delete' %}" style="text-decoration: none;">Delete
+                              account</a>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+
+         function edit(id) {
+            console.log("edit");
+            var div = document.getElementById(id);
+            var btn = document.getElementById(id + "_btn");
+
+            div.style.display = "inline";
+            btn.style.display = "none";
+
+         }
+         function closeDiv(id) {
+            console.log("close");
+            document.getElementById(id).style.display = "none";
+            document.getElementById(id + "_btn").style.display = "inline";
+         }
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Potvrzení platby</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .alert {
+            margin-top: 100px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .confirmed {
+            font-size: 3em;
+            color: green;
+            animation: confirmed 1s infinite;
+        }
+
+        @keyframes confirmed {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Payment Confirmed!</h4>
+            <p>Your payment has been successfully processed. Thank you for your purchase!</p>
+            <hr>
+            <div class="confirmed">✅</div>
+            <a href="{% url 'offers' %}"><button class="btn btn-dark">Go back</button></a>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

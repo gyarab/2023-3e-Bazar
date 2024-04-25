@@ -1,0 +1,117 @@
+div.box {
+    background-color: whitesmoke;
+    margin: 15px 0;
+}
+body {
+    background-color: #f8f9fa;
+}
+.box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+div.box .content, div.box .image {
+    flex: 1;
+}
+
+.responsive-image {
+    height: 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .responsive-image {
+        height: 65%; /* adjust as needed */
+    }
+    .content {
+        font-size: 70%; /* adjust as needed */
+    }
+}
+
+@media (min-width: 375px) and (max-width: 475px) {
+    .responsive-image {
+        height: 60%; /* adjust as needed */
+    }
+    .content {
+        font-size: 50%; /* adjust as needed */
+    }
+}
+
+@media (min-width: 0px) and (max-width: 374px) {
+    .responsive-image {
+        height: 35%; /* adjust as needed */
+    }
+    .content {
+        font-size: 30%; /* adjust as needed */
+    }
+}
+.Big {
+    color: #343a40;
+    font-size: larger;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.Small {
+    color: #495057;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+form.order1 {
+    position: fixed;
+    margin: 20px;
+    text-align: center;
+    margin-right: 0;
+    width: 47%;
+}
+
+form label.order2 {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #cf8a12;
+}
+
+form input,
+form textarea.order3 {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+div.offer_box{
+    height: 170px;
+    margin: 20px 20px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: black;
+}
+.offer_box{
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.centered_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+.centered_text {
+    text-align: center;
+}
