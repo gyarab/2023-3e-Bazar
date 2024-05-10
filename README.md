@@ -8,7 +8,7 @@ Jan Ševčík
 
 Radim Tříletý
 
-## Faker
+## Fake Faker
 
 Vojtěch Kadlec
 
